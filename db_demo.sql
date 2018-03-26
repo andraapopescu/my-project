@@ -29,3 +29,13 @@ INSERT INTO `demo`.`skill` VALUES
 EMPLOYEE_SKILL
 (`id`,`level`,`id_employee`,`id_skill`)
 
+QUIZ 1 : M VARIANT 
+(id, specialization, question, answer) : (id, variant)
+
+INSERT INTO `demo`.`quiz` VALUES
+(0,'SAP','Intrebare','raspuns');
+INSERT INTO `demo`.`variant` VALUES
+(0,'varianta1',id_quiz_0);
+(1,'varianta2',id_quiz_0);
+(2,'varianta3',id_quiz_0);
+(3,'varianta4',id_quiz_0);
