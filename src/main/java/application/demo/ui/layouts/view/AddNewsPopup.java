@@ -3,6 +3,7 @@ package application.demo.ui.layouts.view;
 
 import java.util.Date;
 
+import application.demo.service.NewsService;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,9 +17,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.news.News;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.News;
 import application.demo.security.FilterLoginService;
 
 public class AddNewsPopup extends Window {
@@ -47,7 +47,7 @@ public class AddNewsPopup extends Window {
 						News n = new News(subject.getValue(), subject.getValue(), new Date(), 
 								employee.getFirstName()+ " " + employee.getLastName(), employee);
 						
-						RestConsumer.saveNews(n);
+						NewsService.saveNews(n);
 					}
 					
 					UI.getCurrent().getPage().setLocation("http://localhost:8080/mainPage");

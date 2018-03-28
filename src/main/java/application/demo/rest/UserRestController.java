@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import application.demo.domain.user.User;
-import application.demo.domain.user.UserService;
+import application.demo.domain.User;
+import application.demo.service.UserDbService;
 
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
 
 	@Autowired
-	UserService us;
+    UserDbService us;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<User>> getAllUsers() {

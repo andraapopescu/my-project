@@ -1,21 +1,18 @@
 package application.demo.ui.layouts.view;
 
 import java.util.ArrayList;
-import java.util.Random;
 
+import application.demo.service.SkillService;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-import application.demo.domain.employee.EmployeeModel;
-import application.demo.domain.skills.Skill;
-import application.demo.rest.RestConsumer;
-import application.demo.ui.components.CustomSlider;
+import application.demo.service.EmployeeModel;
+import application.demo.domain.Skill;
 import application.demo.ui.components.CustomSliderSearch;
 import application.demo.ui.components.SkillsPanel;
 import application.demo.ui.layouts.search.SearchEmployeesBySkillsHelper;
@@ -37,7 +34,7 @@ public class SearchEmployeesBySkillsView extends VerticalLayout implements View 
 		header.setSpacing(true);
 
 		ArrayList<Skill> skills = new ArrayList<Skill>();
-		skills = RestConsumer.getAllSkills();
+		skills = SkillService.getAllSkills();
 
 		for (Skill s : skills) {
 			CustomSliderSearch slider = new CustomSliderSearch(s.getName(), (int) s.getId(), this);

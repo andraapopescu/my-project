@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import application.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.annotations.Theme;
@@ -33,11 +34,10 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeModel;
-import application.demo.domain.skills.SkillService;
-import application.demo.domain.user.User;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.service.EmployeeModel;
+import application.demo.service.SkillDbService;
+import application.demo.domain.User;
 import application.demo.security.FilterLoginService;
 import application.demo.security.ServiceProvider;
 import application.demo.ui.layouts.ValoMenuLayout;
@@ -71,7 +71,7 @@ public class MainPage extends UI {
 	boolean showState = false;
 
 	@Autowired
-	SkillService ss;
+	SkillDbService ss;
 
 	private final class OnClickNavigateTo implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
@@ -341,7 +341,7 @@ public class MainPage extends UI {
 				if (SearchView.employeesGrid.getSelectedRow() != null) {
 					Employee employeeToDelete = (Employee) SearchView.employeesGrid.getSelectedRow();
 
-					RestConsumer.deleteEmployee(employeeToDelete);
+					EmployeeService.deleteEmployee(employeeToDelete);
 
 					SearchView.employeesGrid.getContainerDataSource()
 							.removeItem(SearchView.employeesGrid.getSelectedRow());

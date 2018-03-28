@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import application.demo.domain.skills.Skill;
-import application.demo.domain.skills.SkillService;
+import application.demo.domain.Skill;
+import application.demo.service.SkillDbService;
 
 @RestController
 @RequestMapping("/skill")
 public class SkillRestController {
 	
 	@Autowired
-	SkillService ss;
+    SkillDbService ss;
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<Skill>> getAllSkills() {

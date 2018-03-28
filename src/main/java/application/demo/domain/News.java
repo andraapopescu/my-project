@@ -1,4 +1,4 @@
-package application.demo.domain.news;
+package application.demo.domain;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import application.demo.domain.employee.Employee;
+import application.demo.domain.Employee;
 
 @Entity
 @Table(name = "news")

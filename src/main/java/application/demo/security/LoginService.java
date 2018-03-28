@@ -1,6 +1,6 @@
 package application.demo.security;
 
-import application.demo.domain.user.User;
+import application.demo.domain.User;
 
 public interface LoginService {
 	

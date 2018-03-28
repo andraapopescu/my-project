@@ -1,28 +1,25 @@
 package application.demo.ui.layouts.view;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import application.demo.service.MessageService;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.SelectionEvent;
 import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.message.Message;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.Message;
 import application.demo.security.FilterLoginService;
 
 public class MessageView extends VerticalLayout implements View {
@@ -49,7 +46,7 @@ public class MessageView extends VerticalLayout implements View {
 			UI.getCurrent().getPage().setLocation("http://localhost:8080/");
 		} else {
 			currentEmployee = FilterLoginService.currentEmployee;
-			messages = RestConsumer.getMessageByEmployee(currentEmployee.getId());
+			messages = MessageService.getMessageByEmployee(currentEmployee.getId());
 			vLayout = new VerticalLayout();
 
 			Label section = new Label(getTextForLabel());

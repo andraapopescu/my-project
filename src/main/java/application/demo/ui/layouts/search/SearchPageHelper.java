@@ -1,28 +1,16 @@
 package application.demo.ui.layouts.search;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.vaadin.data.Container.Filterable;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.filter.SimpleStringFilter;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.Column;
-import com.vaadin.ui.Grid.HeaderRow;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeModel;
-import application.demo.rest.RestConsumer;
-import application.demo.security.FilterLoginService;
+import application.demo.domain.Employee;
+import application.demo.service.EmployeeModel;
 import application.demo.ui.layouts.view.SearchView;
 
 

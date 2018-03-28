@@ -1,10 +1,10 @@
 package application.demo.ui.layouts.view;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import application.demo.service.*;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.RegexpValidator;
@@ -30,13 +30,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeModel;
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.domain.history_employee_skill.HistoryEmployeeSkill;
-import application.demo.domain.skills.Skill;
-import application.demo.domain.user.User;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.EmployeeSkill;
+import application.demo.domain.HistoryEmployeeSkill;
+import application.demo.domain.Skill;
+import application.demo.domain.User;
 import application.demo.security.FilterLoginService;
 import application.demo.security.LoginService;
 import application.demo.security.LoginService.LoginEvent;
@@ -83,7 +81,7 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 				e.printStackTrace();
 			}
 
-			employee = RestConsumer.getEmployeeById(employeeId);
+			employee = EmployeeService.getEmployeeById(employeeId);
 			
 			try {
 			if (employee == null) {
@@ -95,7 +93,7 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 				
 			} else {
 				editEmployeeViewForAdmin();
-				user = RestConsumer.findUserByUsername(employee.getEmail()).get(0);
+				user = UserService.findUserByUsername(employee.getEmail()).get(0);
 			}
 			} catch(Exception e) {
 				System.out.println("a crapat");
@@ -203,11 +201,11 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 
 		sliders = new ArrayList<CustomSlider>();
 		
-		ArrayList<Skill> skills = RestConsumer.getAllSkills();
+		ArrayList<Skill> skills = SkillService.getAllSkills();
 		
 		HashMap<Integer, String> skillsMap = new HashMap<Integer, String>();
 
-		ArrayList<EmployeeSkill> employeeSkills = RestConsumer.getEmployeeSkillByEmployee(employee.getId());
+		ArrayList<EmployeeSkill> employeeSkills = EmployeeSkillService.getEmployeeSkillByEmployee(employee.getId());
 		HashMap<Integer, Integer> employeeSkillsMap = new HashMap<Integer, Integer>();
 
 		if (employeeSkills == null) {
@@ -284,24 +282,24 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 					up.save(employee.getId());
 				}
 
-				RestConsumer.updateEmployee(employee);
-				RestConsumer.updateUser(u);
+				EmployeeService.updateEmployee(employee);
+				UserService.updateUser(u);
 				
-				ArrayList<EmployeeSkill> employeeSkills = RestConsumer.getEmployeeSkillByEmployee(employeeId);
+				ArrayList<EmployeeSkill> employeeSkills = EmployeeSkillService.getEmployeeSkillByEmployee(employeeId);
 				for(EmployeeSkill es : employeeSkills) {
-					RestConsumer.deleteEmployeeSkillsById(es.getId());
+					EmployeeSkillService.deleteEmployeeSkillsById(es.getId());
 				}
 				
 				
 				for (CustomSlider c : sliders) {
-					Skill skill = RestConsumer.findSkillByName(c.getName()).get(0);
+					Skill skill = SkillService.findSkillByName(c.getName()).get(0);
 
 					EmployeeSkill employeeSkill = new EmployeeSkill((int) c.getValue(), employee, skill);
 
-					RestConsumer.saveEmployeeSkill(employeeSkill);
+					EmployeeSkillService.saveEmployeeSkill(employeeSkill);
 					
 					HistoryEmployeeSkill hes = new HistoryEmployeeSkill(new Date(), (int) c.getValue(), employee,skill);
-					RestConsumer.saveHistoryEmployeeSkill(hes);
+					HistoryEmployeeSkillService.saveHistoryEmployeeSkill(hes);
 				}
 				
 				EmployeeModel.refresh();
@@ -427,10 +425,10 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 		row.setSpacing(true);
 		form.addComponent(row);
 		ArrayList<Skill> allSkills = new ArrayList<Skill>();
-		ArrayList<EmployeeSkill> employeeSkills = RestConsumer.getEmployeeSkillByEmployee(employee.getId());
+		ArrayList<EmployeeSkill> employeeSkills = EmployeeSkillService.getEmployeeSkillByEmployee(employee.getId());
 
 		for (EmployeeSkill es : employeeSkills) {
-			allSkills.add(RestConsumer.getSkillById(es.getSkill().getId()));
+			allSkills.add(SkillService.getSkillById(es.getSkill().getId()));
 
 		}
 
@@ -475,7 +473,7 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 				String addr = adress.getValue();
 				String ph = phone.getValue();
 
-				Employee employee = RestConsumer.getEmployeeById(employeeId);
+				Employee employee = EmployeeService.getEmployeeById(employeeId);
 				employee.setEmail(mail);
 				employee.setAddress(addr);
 				employee.setPhone(ph);
@@ -487,8 +485,8 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 					up.save(employee.getId());
 				}
 
-				RestConsumer.updateEmployee(employee);
-				RestConsumer.updateUser(u);
+				EmployeeService.updateEmployee(employee);
+				UserService.updateUser(u);
 				
 				EmployeeModel.refresh();
 				Notification.show("Your personal information have been actulised");

@@ -2,6 +2,7 @@ package application.demo.rest;
 
 import java.util.ArrayList;
 
+import application.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.news.News;
-import application.demo.domain.news.NewsService;
+import application.demo.domain.Employee;
+import application.demo.domain.News;
+import application.demo.service.NewsDbService;
 
 @RestController
 @RequestMapping("/news")
 public class NewsRestController {
 	
 	@Autowired
-	NewsService ns;
+	NewsDbService ns;
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<News>> getAllNews() {
@@ -42,7 +43,7 @@ public class NewsRestController {
 	
 	@RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
 	public ArrayList<News> getNewsByEmployee(@PathVariable("id") long id) {
-		Employee employee = RestConsumer.getEmployeeById(id);
+		Employee employee = EmployeeService.getEmployeeById(id);
 		
 		return (ArrayList<News>) ns.findByEmployee(employee);
 	}

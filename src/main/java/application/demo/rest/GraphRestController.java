@@ -13,15 +13,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import application.demo.service.EmployeeSkillService;
+import application.demo.service.HistoryEmployeeSkillService;
+import application.demo.service.SkillService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.domain.history_employee_skill.HistoryEmployeeSkill;
-import application.demo.domain.skills.Skill;
-import ch.qos.logback.access.pattern.RequestMethodConverter;
+import application.demo.domain.EmployeeSkill;
+import application.demo.domain.HistoryEmployeeSkill;
+import application.demo.domain.Skill;
 
 @RestController
 @RequestMapping("/getData")
@@ -31,7 +33,7 @@ public class GraphRestController {
 	private String getData(@PathVariable("id") long id) {
 		String results = "[ ";
 
-		ArrayList<HistoryEmployeeSkill> history = RestConsumer.getHistoryEmployeeSkillById(id);
+		ArrayList<HistoryEmployeeSkill> history = HistoryEmployeeSkillService.getHistoryEmployeeSkillById(id);
 
 		Set<Date> dates = new HashSet<Date>();
 		HashMap<String, Integer> skillMap = new HashMap<String, Integer>();
@@ -90,9 +92,9 @@ public class GraphRestController {
 	private String getSkillStatistics() {
 		String result = " [ ";
 
-		ArrayList<EmployeeSkill> employees = RestConsumer.getAllEmployeeSkills();
+		ArrayList<EmployeeSkill> employees = EmployeeSkillService.getAllEmployeeSkills();
 
-		ArrayList<Skill> skills = RestConsumer.getAllSkills();
+		ArrayList<Skill> skills = SkillService.getAllSkills();
 		ArrayList<String> skillsName = new ArrayList<String>();
 		for (Skill s : skills) {
 			skillsName.add(s.getName());

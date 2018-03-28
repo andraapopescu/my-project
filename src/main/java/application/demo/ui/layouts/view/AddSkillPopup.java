@@ -2,6 +2,7 @@ package application.demo.ui.layouts.view;
 
 import java.util.ArrayList;
 
+import application.demo.service.SkillService;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
@@ -14,8 +15,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.skills.Skill;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Skill;
 
 public class AddSkillPopup extends Window {
 	private static final long serialVersionUID = 1L;
@@ -56,8 +56,8 @@ public class AddSkillPopup extends Window {
 					Notification.show("Select a skill from the list to delete!");
 				} else {
 					deleteButton.setEnabled(true);
-					Skill skill = RestConsumer.findSkillByName(comboBox.getValue().toString()).get(0);
-					RestConsumer.deleteSkill(skill.getId());
+					Skill skill = SkillService.findSkillByName(comboBox.getValue().toString()).get(0);
+					SkillService.deleteSkill(skill.getId());
 					
 					comboBox.removeItem(comboBox.getValue());
 				}
@@ -83,7 +83,7 @@ public class AddSkillPopup extends Window {
 						Notification.show("The skill you introduces is already in the list!");
 					} else {
 						skill.setName(skillNameField.getValue());
-						RestConsumer.saveSkill(skill);
+						SkillService.saveSkill(skill);
 						
 						comboBox.addItem(skill.getName());
 						skills.add(skill.getName());
@@ -128,7 +128,7 @@ public class AddSkillPopup extends Window {
 	
 	public ArrayList<String> getSkillsNames() {
 		ArrayList<String> result = new ArrayList<>();
-		for(Skill s : RestConsumer.getAllSkills()) {
+		for(Skill s : SkillService.getAllSkills()) {
 			result.add(s.getName());
 		}
 		

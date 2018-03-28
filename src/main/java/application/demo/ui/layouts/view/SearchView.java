@@ -1,5 +1,6 @@
 package application.demo.ui.layouts.view;
 
+import application.demo.service.EmployeeService;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
@@ -17,10 +18,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeModel;
-import application.demo.domain.employee_skill.EmployeeSkillService;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.service.EmployeeModel;
+import application.demo.service.EmployeeSkillDbService;
 import application.demo.security.FilterLoginService;
 import application.demo.ui.components.Pdf;
 import application.demo.ui.layouts.SecondMenuLayout;
@@ -44,7 +44,7 @@ public class SearchView extends VerticalLayout implements View {
 
 	boolean showState = false;
 
-	EmployeeSkillService ess;
+	EmployeeSkillDbService ess;
 
 	SecondMenuLayout root = new SecondMenuLayout();
 	ComponentContainer viewDisplay = root.getContentContainer();
@@ -101,7 +101,7 @@ public class SearchView extends VerticalLayout implements View {
 		employeesGrid.getContainerDataSource().removeItem(employeesGrid.getSelectedRow());
 		employeesGrid.getContainerDataSource().addItemAt(Selectedindex, e);
 
-		RestConsumer.updateEmployee(e);
+		EmployeeService.updateEmployee(e);
 		EmployeeModel.refresh();
 	}
 

@@ -1,26 +1,22 @@
 package application.demo.ui.layouts.view;
 
+import application.demo.service.UserService;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.user.User;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.User;
 import application.demo.security.FilterLoginService;
 import application.demo.ui.MainPage;
 
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-
-import aj.org.objectweb.asm.Type;
 
 public class ChangePasswordPopup extends Window {
 	private static final long serialVersionUID = 1L;
@@ -87,7 +83,7 @@ public class ChangePasswordPopup extends Window {
 					User u = new User(user.getUserName(), MainPage.hashingwithSHA(newPws), user.getRole());
 					u.setId(user.getId());
 
-					RestConsumer.saveUser(u);
+					UserService.saveUser(u);
 					Notification.show("Your password has been changed!");
 
 					close();

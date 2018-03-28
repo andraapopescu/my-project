@@ -5,15 +5,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import application.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeService;
-import application.demo.domain.user.User;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.User;
+import application.demo.service.EmployeeService;
 
 public class FilterLoginService implements LoginService {
 
@@ -31,17 +31,17 @@ public class FilterLoginService implements LoginService {
 
 	@Override
 	public void login(String username, String password) {		
-		for( User u : RestConsumer.getAllUsers()) {
+		for( User u : UserService.getAllUsers()) {
 			String encryptedPassword = password;
 			try {
 			if(u.getUserName().equals(username) && encryptedPassword.equals(u.getPassword()) ) {
 				loggedUser = u;	
 				if(loggedUser.getRole().equals("user"))  {
-					currentEmployee = RestConsumer.findEmployeeByEmail(loggedUser.getUserName()).get(0);
+					currentEmployee = EmployeeService.findEmployeeByEmail(loggedUser.getUserName()).get(0);
 				}
 				
 				else { 
-					currentEmployee = RestConsumer.findEmployeeByLastName("admin").get(0);
+					currentEmployee = EmployeeService.findEmployeeByLastName("admin").get(0);
 					System.err.println(currentEmployee.getFirstName());
 				 }
 				 

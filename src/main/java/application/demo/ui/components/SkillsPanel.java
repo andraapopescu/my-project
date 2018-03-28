@@ -3,6 +3,9 @@ package application.demo.ui.components;
 import java.io.File;
 import java.util.ArrayList;
 
+import application.demo.service.EmployeeService;
+import application.demo.service.EmployeeSkillService;
+import application.demo.service.SkillService;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -10,10 +13,9 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.domain.skills.Skill;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.EmployeeSkill;
+import application.demo.domain.Skill;
 
 public class SkillsPanel extends CustomComponent {
 	private static final long serialVersionUID = 1L;
@@ -58,8 +60,8 @@ public class SkillsPanel extends CustomComponent {
 		ArrayList<EmployeeSkill> empSkills = new ArrayList<EmployeeSkill>();
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 
-		skills = RestConsumer.getAllSkills();
-		employees = RestConsumer.getAllEmployees();
+		skills = SkillService.getAllSkills();
+		employees = EmployeeService.getAllEmployees();
 
 
 		int i = 0;
@@ -67,7 +69,7 @@ public class SkillsPanel extends CustomComponent {
 		ArrayList<EmployeeSkill> empsList = new ArrayList<EmployeeSkill>();
 
 		for (Employee e : employees) {
-			empsList = RestConsumer.getEmployeeSkillByEmployee(employee.getId());
+			empsList = EmployeeSkillService.getEmployeeSkillByEmployee(employee.getId());
 		}
 		
 		for (EmployeeSkill es : empsList) {

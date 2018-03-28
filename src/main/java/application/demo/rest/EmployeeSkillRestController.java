@@ -2,6 +2,7 @@ package application.demo.rest;
 
 import java.util.ArrayList;
 
+import application.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,17 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.domain.employee_skill.EmployeeSkillService;
-import application.demo.domain.skills.Skill;
+import application.demo.domain.Employee;
+import application.demo.domain.EmployeeSkill;
+import application.demo.service.EmployeeSkillDbService;
 
 @RestController
 @RequestMapping("/employeeSkills")
 public class EmployeeSkillRestController {
 	
 	@Autowired
-	EmployeeSkillService ess;
+    EmployeeSkillDbService ess;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<EmployeeSkill>> getAllEmployeeSkills() {
@@ -50,7 +50,7 @@ public class EmployeeSkillRestController {
 	
 	@RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
 	public ArrayList<EmployeeSkill> getEmployeeSkillByEmployee(@PathVariable("id") long id) {
-		Employee employee = RestConsumer.getEmployeeById(id);
+		Employee employee = EmployeeService.getEmployeeById(id);
 		
 		return (ArrayList<EmployeeSkill>) ess.findByEmployee(employee);
 	}

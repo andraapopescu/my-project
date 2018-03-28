@@ -2,6 +2,7 @@ package application.demo.rest;
 
 import java.util.ArrayList;
 
+import application.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.history_employee_skill.HistoryEmployeeSkill;
-import application.demo.domain.history_employee_skill.HistoryEmployeeSkillService;
+import application.demo.domain.Employee;
+import application.demo.domain.HistoryEmployeeSkill;
+import application.demo.service.HistoryEmployeeSkillDbService;
 
 @RestController
 @RequestMapping("/history")
 public class HistoryEmployeeSkillRestController {
 
 	@Autowired
-	HistoryEmployeeSkillService hess;
+	HistoryEmployeeSkillDbService hess;
 	
 	/* GET */
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
@@ -38,7 +39,7 @@ public class HistoryEmployeeSkillRestController {
 	
 	@RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
 	public ArrayList<HistoryEmployeeSkill> getHistorySkillByEmployee(@PathVariable("id") long id) {
-		Employee employee = RestConsumer.getEmployeeById(id);
+		Employee employee = EmployeeService.getEmployeeById(id);
 		
 		return (ArrayList<HistoryEmployeeSkill>) hess.findByEmployee(employee);
 	}

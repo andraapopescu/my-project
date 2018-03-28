@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import application.demo.service.EmployeeService;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.VerticalLayout;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeModel;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.service.EmployeeModel;
 import application.demo.ui.components.SkillsPanel;
 
 
@@ -71,7 +71,7 @@ public class SearchEmployeesBySkillsHelper {
 
 	public static BeanItemContainer<Employee> getGridSource() {
 		BeanItemContainer<Employee> result = new BeanItemContainer<Employee>(Employee.class);
-		ArrayList<Employee> list = RestConsumer.getMultipleEmployees(remainingEmployees);
+		ArrayList<Employee> list = EmployeeService.getMultipleEmployees(remainingEmployees);
 
 		if (!list.isEmpty())
 			result.addAll(list);

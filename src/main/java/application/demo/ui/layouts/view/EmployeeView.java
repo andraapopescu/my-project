@@ -4,6 +4,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import application.demo.service.EmployeeService;
+import application.demo.service.EmployeeSkillService;
+import application.demo.service.SkillService;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -16,10 +19,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.domain.skills.Skill;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.EmployeeSkill;
+import application.demo.domain.Skill;
 import application.demo.security.LoginService;
 import application.demo.security.LoginService.LoginEvent;
 import application.demo.security.ServiceProvider;
@@ -45,7 +47,7 @@ public class EmployeeView extends VerticalLayout implements View, LoginService.L
 				return;
 			}
 
-			employee = RestConsumer.getEmployeeById(employeeId);
+			employee = EmployeeService.getEmployeeById(employeeId);
 
 			if (employee == null) {
 				UI.getCurrent().getNavigator().navigateTo(SearchView.NAME);
@@ -163,10 +165,10 @@ public class EmployeeView extends VerticalLayout implements View, LoginService.L
 		form.addComponent(row);
 
 		ArrayList<Skill> allSkills = new ArrayList<Skill>();
-		ArrayList<EmployeeSkill> employeeSkills = RestConsumer.getEmployeeSkillByEmployee(employee.getId());
+		ArrayList<EmployeeSkill> employeeSkills = EmployeeSkillService.getEmployeeSkillByEmployee(employee.getId());
 
 		for (EmployeeSkill es : employeeSkills) {
-			allSkills.add(RestConsumer.getSkillById(es.getSkill().getId()));
+			allSkills.add(SkillService.getSkillById(es.getSkill().getId()));
 
 		}
 

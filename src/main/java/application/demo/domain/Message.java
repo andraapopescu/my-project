@@ -1,4 +1,4 @@
-package application.demo.domain.message;
+package application.demo.domain;
 
 import java.util.Date;
 
@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import application.demo.domain.employee.Employee;
 
 @Entity
 @Table(name = "message")

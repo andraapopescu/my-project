@@ -4,7 +4,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 
-import application.demo.domain.employee.Employee;
+import application.demo.domain.Employee;
 import application.demo.ui.layouts.view.SearchView;
 
 public class SearchButtonClickListener implements Button.ClickListener {

@@ -2,9 +2,9 @@ package application.demo.ui.layouts.view;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
+import application.demo.service.NewsService;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -22,9 +22,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import application.demo.domain.message.Message;
-import application.demo.domain.news.News;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.News;
 
 public class NewsView extends VerticalLayout implements View {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +35,7 @@ public class NewsView extends VerticalLayout implements View {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("E , d MMMMM yyyy , hh:mm ");
 	
-	private ArrayList<News> news = RestConsumer.getAllNews();
+	private ArrayList<News> news = NewsService.getAllNews();
 
 	VerticalLayout vLayout = new VerticalLayout();
 	VerticalLayout leftVLayout = new VerticalLayout();

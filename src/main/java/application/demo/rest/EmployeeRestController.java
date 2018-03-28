@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.ws.rs.QueryParam;
 
+import application.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,22 +17,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeService;
-import application.demo.domain.employee_skill.EmployeeSkillService;
-import application.demo.domain.history_employee_skill.HistoryEmployeeSkill;
-import application.demo.domain.history_employee_skill.HistoryEmployeeSkillService;
-import application.demo.domain.skills.SkillService;
+import application.demo.domain.Employee;
+import application.demo.domain.HistoryEmployeeSkill;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeRestController {
 
 	@Autowired
-	EmployeeService es;
-	EmployeeSkillService ess;
-	SkillService s;
-	HistoryEmployeeSkillService hess;
+	EmployeeDbService es;
+	EmployeeSkillDbService ess;
+	SkillDbService s;
+	HistoryEmployeeSkillDbService hess;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<Employee>> getAllEmployees() {
@@ -97,7 +94,7 @@ public class EmployeeRestController {
 
 	@RequestMapping(value = "/deleteEmployee/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Employee> deleteEmployee(@PathVariable("id") long id) {
-		ArrayList<HistoryEmployeeSkill> hesList = RestConsumer.getHistoryEmployeeSkillById(id);
+		ArrayList<HistoryEmployeeSkill> hesList = HistoryEmployeeSkillService.getHistoryEmployeeSkillById(id);
 
 		/*System.out.println("size " + hesList.size());
 		if (hesList != null) {

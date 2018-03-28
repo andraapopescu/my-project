@@ -1,18 +1,18 @@
-package application.demo.domain.employee;
+package application.demo.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.EmployeeSkill;
 import application.demo.security.FilterLoginService;
 
 public class EmployeeModel {
 
-	public static ArrayList<Employee> allEmployees = RestConsumer.getAllEmployees();
+	public static ArrayList<Employee> allEmployees = EmployeeService.getAllEmployees();
 	public static HashMap<Integer, Employee> employeesMap = new HashMap<Integer, Employee>();
-	public static ArrayList<EmployeeSkill> allEmployeeSkills = RestConsumer.getAllEmployeeSkills();
+	public static ArrayList<EmployeeSkill> allEmployeeSkills = EmployeeSkillService.getAllEmployeeSkills();
 
 	static {
 		if (allEmployees != null)
@@ -22,8 +22,8 @@ public class EmployeeModel {
 	}
 
 	public static void refresh() {
-		allEmployees = RestConsumer.getAllEmployees();
-		allEmployeeSkills = RestConsumer.getAllEmployeeSkills();
+		allEmployees = EmployeeService.getAllEmployees();
+		allEmployeeSkills = EmployeeSkillService.getAllEmployeeSkills();
 
 		if (allEmployees != null)
 			for (Employee e : allEmployees) {

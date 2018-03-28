@@ -1,11 +1,11 @@
-package application.demo.domain.skills;
+package application.demo.service;
 
 import java.util.List;
 
 import application.demo.domain.DatabaseService;
+import application.demo.domain.Skill;
 
-//public interface SkillService extends DatabaseService<Skill, Long> {
-public interface SkillService extends DatabaseService<Skill, Long> {
+public interface SkillDbService extends DatabaseService<Skill, Long> {
 	List<Skill> findByName(String name);
 
 //	@Query("SELECT s FROM Skill s WHERE s.name = :name")

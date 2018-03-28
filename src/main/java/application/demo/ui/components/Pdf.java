@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import application.demo.service.EmployeeSkillService;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -17,9 +18,8 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.vaadin.server.StreamResource.StreamSource;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.EmployeeSkill;
 
 public class Pdf implements StreamSource {
 	private static final long serialVersionUID = 1L;
@@ -87,7 +87,7 @@ public class Pdf implements StreamSource {
 					new Font(Font.FontFamily.HELVETICA, 14, Font.BOLDITALIC, BaseColor.BLACK)));
 			document.add(new Paragraph(""));
 			document.add(new Paragraph("\n"));
-			ArrayList<EmployeeSkill> emSkills = RestConsumer.getEmployeeSkillByEmployee(selectedEmployee.getId());
+			ArrayList<EmployeeSkill> emSkills = EmployeeSkillService.getEmployeeSkillByEmployee(selectedEmployee.getId());
 
 			if (emSkills != null)
 				for (EmployeeSkill es : emSkills) {

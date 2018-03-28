@@ -1,4 +1,4 @@
-package application.demo.domain.skills;
+package application.demo.domain;
 
 
 import javax.persistence.Entity;

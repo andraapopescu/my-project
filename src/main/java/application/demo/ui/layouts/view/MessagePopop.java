@@ -12,6 +12,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import application.demo.service.EmployeeService;
+import application.demo.service.MessageService;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -26,10 +28,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.user.User;
-import application.demo.domain.message.Message;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.User;
+import application.demo.domain.Message;
 import application.demo.security.FilterLoginService;
 
 public class MessagePopop extends Window {
@@ -166,7 +167,7 @@ public class MessagePopop extends Window {
 			public void buttonClick(ClickEvent event) {
 				if (user.getRole().equals("admin")) {
 					try {
-						RestConsumer.findEmployeeByEmail(comboBox.getValue().toString()).get(0);
+						EmployeeService.findEmployeeByEmail(comboBox.getValue().toString()).get(0);
 						createMessage();
 					} catch (IndexOutOfBoundsException e) {
 						sendMessage();
@@ -189,7 +190,7 @@ public class MessagePopop extends Window {
 		ComboBox result = new ComboBox();
 		result.setFilteringMode(FilteringMode.CONTAINS);
 
-		for (Employee e : RestConsumer.getAllEmployees()) {
+		for (Employee e : EmployeeService.getAllEmployees()) {
 			result.addItem(e.getEmail());
 		}
 
@@ -208,7 +209,7 @@ public class MessagePopop extends Window {
 
 		if (!comboBox.getValue().toString().isEmpty()) {
 			try {
-				employee = RestConsumer.findEmployeeByEmail(comboBox.getValue().toString()).get(0);
+				employee = EmployeeService.findEmployeeByEmail(comboBox.getValue().toString()).get(0);
 
 				if (subject.getValue().isEmpty()) {
 					Notification.show("You may not want to send a message without a subject");
@@ -228,7 +229,7 @@ public class MessagePopop extends Window {
 				message = new Message(from, new Date(), subject.getValue(), text.getValue(), employee);
 				System.err.println(message);
 
-				RestConsumer.saveMessage(message);
+				MessageService.saveMessage(message);
 				Notification.show("Message SENT !! ");
 				this.close();
 

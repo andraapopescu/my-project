@@ -2,8 +2,8 @@ package application.demo.ui.layouts.view;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
+import application.demo.service.*;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.RegexpValidator;
@@ -24,13 +24,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-import application.demo.domain.employee.Employee;
-import application.demo.domain.employee.EmployeeModel;
-import application.demo.domain.employee_skill.EmployeeSkill;
-import application.demo.domain.history_employee_skill.HistoryEmployeeSkill;
-import application.demo.domain.skills.Skill;
-import application.demo.domain.user.User;
-import application.demo.rest.RestConsumer;
+import application.demo.domain.Employee;
+import application.demo.domain.EmployeeSkill;
+import application.demo.domain.HistoryEmployeeSkill;
+import application.demo.domain.Skill;
+import application.demo.domain.User;
 import application.demo.ui.MainPage;
 import application.demo.ui.components.CustomImageUploader;
 import application.demo.ui.components.CustomSlider;
@@ -129,7 +127,7 @@ public class AddEmployeeView extends VerticalLayout implements View {
 
 		addValidators();
 
-		ArrayList<Skill> skills = RestConsumer.getAllSkills();
+		ArrayList<Skill> skills = SkillService.getAllSkills();
 		int i = 1;
 
 		sliders = new ArrayList<CustomSlider>();
@@ -209,15 +207,15 @@ public class AddEmployeeView extends VerticalLayout implements View {
 //		skills = RestConsumer.getAllSkills();
 
 		Employee employee = new Employee(fName, lName, bDay, addr, mail, phoneNr, empDate, sal);
-		RestConsumer.saveEmployee(employee);
+		EmployeeService.saveEmployee(employee);
 
-		ArrayList<Employee> employees = RestConsumer.getAllEmployees();
+		ArrayList<Employee> employees = EmployeeService.getAllEmployees();
 		Employee lastEmployee = employees.get(employees.size() - 1);
 		
 		String userPassword = MainPage.hashingwithSHA("user");
 		User user = new User(lastEmployee.getEmail(), userPassword, "user");
 		
-		RestConsumer.saveUser(user);
+		UserService.saveUser(user);
 
 		// save image
 		if (up.isUploaded()) {
@@ -226,14 +224,14 @@ public class AddEmployeeView extends VerticalLayout implements View {
 
 		for (CustomSlider c : sliders) {
 			if (c.getValue() > 0) {
-				Skill skill = RestConsumer.findSkillByName(c.getName()).get(0);
+				Skill skill = SkillService.findSkillByName(c.getName()).get(0);
 				EmployeeSkill employeeSkill = new EmployeeSkill((int) c.getValue(), lastEmployee, skill);
 
-				RestConsumer.saveEmployeeSkill(employeeSkill);
+				EmployeeSkillService.saveEmployeeSkill(employeeSkill);
 				
 				HistoryEmployeeSkill hes = new HistoryEmployeeSkill(new Date(), (int) c.getValue(), 
 						lastEmployee, skill);
-				RestConsumer.saveHistoryEmployeeSkill(hes);
+				HistoryEmployeeSkillService.saveHistoryEmployeeSkill(hes);
 				
 			}
 
