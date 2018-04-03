@@ -1,6 +1,8 @@
 package application.demo.service;
 
 import application.demo.domain.Message;
+import application.demo.domain.Quiz;
+import application.demo.domain.Variant;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,19 +14,19 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MessageService {
+public class QuizService {
 
     public static String REST_SERVICE_URI = "http://localhost:8080";
     public static ObjectMapper mapper = new ObjectMapper();
 
-    public static ArrayList<Message> getAllMessages() {
-        ArrayList<Message> result = null;
+    public static ArrayList<Quiz> getAllQuizzes() {
+        ArrayList<Quiz> result = null;
         URL u;
 
         try {
-            u = new URL(REST_SERVICE_URI + "/message/all");
+            u = new URL(REST_SERVICE_URI + "/quiz/all");
             result = mapper.readValue(u,
-                    mapper.getTypeFactory().constructCollectionType(ArrayList.class, Message.class));
+                    mapper.getTypeFactory().constructCollectionType(ArrayList.class, Quiz.class));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (JsonParseException e) {
@@ -36,37 +38,15 @@ public class MessageService {
         }
 
         return result;
-
     }
 
-    public static ArrayList<Message> getMessageByEmployee(long id) {
-        ArrayList<Message> result = null;
-
+    public static Quiz getQuizById(long id) {
+        Quiz result = null;
         URL u;
 
         try {
-            u = new URL(REST_SERVICE_URI + "/message/employee/" + id);
-            result = mapper.readValue(u, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Message.class));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    public static Message getMessageById(long id) {
-        Message result = null;
-        URL u;
-
-        try {
-            u = new URL(REST_SERVICE_URI + "/message/" + id);
-            result = mapper.readValue(u, Message.class);
+            u = new URL(REST_SERVICE_URI + "/quiz/" + id);
+            result = mapper.readValue(u, Quiz.class);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -81,18 +61,16 @@ public class MessageService {
         return result;
     }
 
-    public static Message saveMessage(Message message) {
+    public static Quiz saveVariant(Quiz quiz) {
         RestTemplate restTemplate = new RestTemplate();
-        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/message/save",
-                message, Message.class);
+        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/quiz/save", quiz, Quiz.class);
 
-        Message result = new Message();
+        Quiz result = new Quiz();
         URL u;
 
         try {
             u = new URL(uri.toASCIIString());
-
-            result = mapper.readValue(u, Message.class);
+            result = mapper.readValue(u, Quiz.class);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -105,7 +83,6 @@ public class MessageService {
         }
 
         return result;
-
     }
 
 }

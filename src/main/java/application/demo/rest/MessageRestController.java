@@ -16,14 +16,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import application.demo.domain.Employee;
 import application.demo.domain.Message;
-import application.demo.domain.MessageService;
+import application.demo.service.MessageDbService;
 
 @RestController
 @RequestMapping("/message")
 public class MessageRestController {
 	
 	@Autowired
-	MessageService ms;
+    MessageDbService ms;
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<Message>> getAllMessages() {

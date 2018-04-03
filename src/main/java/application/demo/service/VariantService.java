@@ -1,6 +1,7 @@
 package application.demo.service;
 
 import application.demo.domain.Message;
+import application.demo.domain.Variant;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,17 +13,17 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MessageService {
+public class VariantService {
 
     public static String REST_SERVICE_URI = "http://localhost:8080";
     public static ObjectMapper mapper = new ObjectMapper();
 
-    public static ArrayList<Message> getAllMessages() {
-        ArrayList<Message> result = null;
+    public static ArrayList<Variant> getAllVariants() {
+        ArrayList<Variant> result = null;
         URL u;
 
         try {
-            u = new URL(REST_SERVICE_URI + "/message/all");
+            u = new URL(REST_SERVICE_URI + "/variant/all");
             result = mapper.readValue(u,
                     mapper.getTypeFactory().constructCollectionType(ArrayList.class, Message.class));
         } catch (MalformedURLException e) {
@@ -36,17 +37,16 @@ public class MessageService {
         }
 
         return result;
-
     }
 
-    public static ArrayList<Message> getMessageByEmployee(long id) {
-        ArrayList<Message> result = null;
+    public static ArrayList<Variant> getVariantByQuiz(long id) {
+        ArrayList<Variant> result = null;
 
         URL u;
 
         try {
-            u = new URL(REST_SERVICE_URI + "/message/employee/" + id);
-            result = mapper.readValue(u, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Message.class));
+            u = new URL(REST_SERVICE_URI + "/variant/quiz/" + id);
+            result = mapper.readValue(u, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Variant.class));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (JsonParseException e) {
@@ -60,13 +60,13 @@ public class MessageService {
         return result;
     }
 
-    public static Message getMessageById(long id) {
-        Message result = null;
+    public static Variant getVariantById(long id) {
+        Variant result = null;
         URL u;
 
         try {
-            u = new URL(REST_SERVICE_URI + "/message/" + id);
-            result = mapper.readValue(u, Message.class);
+            u = new URL(REST_SERVICE_URI + "/variant/" + id);
+            result = mapper.readValue(u, Variant.class);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -81,18 +81,18 @@ public class MessageService {
         return result;
     }
 
-    public static Message saveMessage(Message message) {
+    public static Variant saveVariant(Message message) {
         RestTemplate restTemplate = new RestTemplate();
-        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/message/save",
+        URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/variant/save",
                 message, Message.class);
 
-        Message result = new Message();
+        Variant result = new Variant();
         URL u;
 
         try {
             u = new URL(uri.toASCIIString());
 
-            result = mapper.readValue(u, Message.class);
+            result = mapper.readValue(u, Variant.class);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -105,7 +105,5 @@ public class MessageService {
         }
 
         return result;
-
     }
-
 }

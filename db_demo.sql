@@ -30,7 +30,7 @@ EMPLOYEE_SKILL
 (`id`,`level`,`id_employee`,`id_skill`)
 
 QUIZ 1 : M VARIANT 
-(id, specialization, question, answer) : (id, variant)
+(id, specialization, variant, answer) : (id, variant)
 
 INSERT INTO `demo`.`quiz` VALUES
 (0,'SAP','Intrebare','raspuns');
