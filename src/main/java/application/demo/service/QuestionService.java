@@ -1,6 +1,7 @@
 package application.demo.service;
 
 import application.demo.domain.Question;
+import application.demo.domain.Variant;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,12 +18,12 @@ public class QuestionService {
     public static String REST_SERVICE_URI = "http://localhost:8080";
     public static ObjectMapper mapper = new ObjectMapper();
 
-    public static ArrayList<Question> getAllQuizzes() {
+    public static ArrayList<Question> getAllQuestions() {
         ArrayList<Question> result = null;
         URL u;
 
         try {
-            u = new URL(REST_SERVICE_URI + "/quiz/all");
+            u = new URL(REST_SERVICE_URI + "/question/all");
             result = mapper.readValue(u,
                     mapper.getTypeFactory().constructCollectionType(ArrayList.class, Question.class));
         } catch (MalformedURLException e) {
@@ -38,12 +39,12 @@ public class QuestionService {
         return result;
     }
 
-    public static Question getQuizById( long id) {
+    public static Question getQuestionById( long id) {
         Question result = null;
         URL u;
 
         try {
-            u = new URL(REST_SERVICE_URI + "/quiz/" + id);
+            u = new URL(REST_SERVICE_URI + "/question/" + id);
             result = mapper.readValue(u, Question.class);
 
         } catch (MalformedURLException e) {
@@ -59,7 +60,7 @@ public class QuestionService {
         return result;
     }
 
-    public static Question saveVariant( Question question ) {
+    public static Question saveQuestion(Question question ) {
         RestTemplate restTemplate = new RestTemplate();
         URI uri = restTemplate.postForLocation(REST_SERVICE_URI + "/question/save", question, Question.class);
 
@@ -70,6 +71,28 @@ public class QuestionService {
             u = new URL(uri.toASCIIString());
             result = mapper.readValue(u, Question.class);
 
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+
+    public static ArrayList<Question> getQuestionsByQuiz( long id) {
+        ArrayList<Question> result = null;
+
+        URL u;
+
+        try {
+            u = new URL(REST_SERVICE_URI + "/question/quiz/" + id);
+            result = mapper.readValue(u, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Question.class));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (JsonParseException e) {

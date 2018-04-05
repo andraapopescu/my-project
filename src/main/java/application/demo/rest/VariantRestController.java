@@ -21,9 +21,6 @@ public class VariantRestController {
     @Autowired
     VariantDbService vs;
 
-    @Autowired
-    QuestionDbService qs;
-
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<Variant>> getAllVariants() {
         ArrayList<Variant> result = (ArrayList<Variant>) vs.findAll();
@@ -40,9 +37,9 @@ public class VariantRestController {
         return vs.findOne(id);
     }
 
-    @RequestMapping(value = "/quiz/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
     public ArrayList<Variant> getVariantsByQuiz(@PathVariable("id") long id) {
-        Question question = QuestionService.getQuizById(id);
+        Question question = QuestionService.getQuestionById(id);
 
         return (ArrayList<Variant>) vs.findByQuestion(question);
     }

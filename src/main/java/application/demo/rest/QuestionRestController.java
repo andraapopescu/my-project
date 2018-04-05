@@ -12,14 +12,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/quiz")
+@RequestMapping("/question")
 public class QuestionRestController {
 
     @Autowired
     QuestionDbService qs;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public ResponseEntity<ArrayList<Question>> getAllQuizzes() {
+    public ResponseEntity<ArrayList<Question>> getAllQuestions() {
         ArrayList<Question> result = (ArrayList<Question>) qs.findAll();
 
         if(result.isEmpty()) {
@@ -30,7 +30,7 @@ public class QuestionRestController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public Question getQuizById( @PathVariable("id") long id) {
+    public Question getQuestionById( @PathVariable("id") long id) {
         return qs.findOne(id);
     }
 
@@ -39,7 +39,7 @@ public class QuestionRestController {
         qs.save(question);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("message/{id}").buildAndExpand(question.getId()).toUri());
+        headers.setLocation(ucBuilder.path("question/{id}").buildAndExpand(question.getId()).toUri());
 
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }

@@ -3,7 +3,7 @@ package application.demo.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "quiz")
+@Table(name = "question")
 public class Question {
 
     @Id
@@ -13,16 +13,28 @@ public class Question {
     private String specialization;
     private String question;
     private String answer;
-    private boolean isActive;
 
-    public Question( String specialization, String question, String answer, boolean isActive) {
+
+    @ManyToOne(cascade= CascadeType.MERGE , fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_quiz")
+    private Quiz quiz;
+
+    public Question() {
+    }
+
+    public Question( String specialization, String question, String answer, Quiz quiz ) {
         this.specialization = specialization;
         this.question = question;
         this.answer = answer;
-        this.isActive = isActive;
+        this.quiz = quiz;
     }
 
-    public Question() {
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz( Quiz quiz ) {
+        this.quiz = quiz;
     }
 
     public long getId() {
@@ -57,14 +69,6 @@ public class Question {
         this.answer = answer;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive( boolean active ) {
-        isActive = active;
-    }
-
     @Override
     public String toString() {
         return "Question{" +
@@ -72,7 +76,8 @@ public class Question {
                 ", specialization='" + specialization + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
-                ", isActive=" + isActive +
+                ", quiz=" + quiz +
                 '}';
     }
 }
+
