@@ -363,7 +363,7 @@ public class MainPage extends UI {
 		logo.setPrimaryStyleName("valo-menu-logo");
 		menu.addComponent(logo);
 
-		Button quiz = new Button("Quiz");
+		Button quiz = new Button("Question");
 		quiz.setIcon(FontAwesome.GRADUATION_CAP);
 		quiz.setPrimaryStyleName("valo-menu-item");
 		quiz.setHtmlContentAllowed(true);

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "quiz")
-public class Quiz {
+public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,14 +15,14 @@ public class Quiz {
     private String answer;
     private boolean isActive;
 
-    public Quiz( String specialization, String question, String answer, boolean isActive ) {
+    public Question( String specialization, String question, String answer, boolean isActive) {
         this.specialization = specialization;
         this.question = question;
         this.answer = answer;
         this.isActive = isActive;
     }
 
-    public Quiz() {
+    public Question() {
     }
 
     public long getId() {
@@ -67,7 +67,7 @@ public class Quiz {
 
     @Override
     public String toString() {
-        return "Quiz{" +
+        return "Question{" +
                 "id=" + id +
                 ", specialization='" + specialization + '\'' +
                 ", question='" + question + '\'' +

@@ -13,11 +13,11 @@ public class Variant {
 
     @ManyToOne(cascade= CascadeType.MERGE , fetch = FetchType.EAGER)
     @JoinColumn(name = "id_quiz")
-    private Quiz quiz;
+    private Question question;
 
-    public Variant( String variant, Quiz quiz ) {
+    public Variant( String variant, Question question ) {
         this.variant = variant;
-        this.quiz = quiz;
+        this.question = question;
     }
 
     public Variant() {
@@ -39,12 +39,12 @@ public class Variant {
         this.variant = variant;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
+    public Question getQuestion() {
+        return question;
     }
 
-    public void setQuiz( Quiz quiz ) {
-        this.quiz = quiz;
+    public void setQuestion( Question question ) {
+        this.question = question;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Variant {
         return "Variant{" +
                 "id=" + id +
                 ", variant='" + variant + '\'' +
-                ", quiz=" + quiz +
+                ", question=" + question +
                 '}';
     }
 }

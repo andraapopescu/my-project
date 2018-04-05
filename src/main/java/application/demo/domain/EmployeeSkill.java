@@ -24,9 +24,8 @@ public class EmployeeSkill {
 		
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_employee")
-
 	private Employee employee;
 
 	
@@ -34,13 +33,6 @@ public class EmployeeSkill {
 	@JoinColumn(name = "id_skill")
 
 	private Skill skill;
-
-//	public EmployeeSkill(int level, long employeeId, long skillId) {
-//		super();
-//		this.level = level;
-//		this.employee.setId(employeeId);
-//		this.skill.setId(skillId);
-//	}
 	
 	public EmployeeSkill(int level, Employee employee, Skill skill) {
 		super();
