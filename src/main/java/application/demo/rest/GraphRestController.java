@@ -95,9 +95,9 @@ public class GraphRestController {
 		ArrayList<EmployeeSkill> employees = EmployeeSkillService.getAllEmployeeSkills();
 
 		ArrayList<Skill> skills = SkillService.getAllSkills();
-		ArrayList<String> skillsName = new ArrayList<String>();
-		for (Skill s : skills) {
-			skillsName.add(s.getName());
+		Set<String> skillsName = new HashSet<>();
+		for (EmployeeSkill es : employees) {
+			skillsName.add(es.getSkill().getName());
 		}
 		for (String skill : skillsName) {
 			result = result + " {\"label\" : " + " \" " + skill + " \"" + " , \"data\" : [ " ;

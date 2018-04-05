@@ -20,7 +20,6 @@ $(document).ready(function(){
 	  ykeys: ['a', 'b'],
 	  labels: [ 'Min', 'Max' ]
 	});
-	alert(newData);
 });
 
 function getNewJson(data) {
