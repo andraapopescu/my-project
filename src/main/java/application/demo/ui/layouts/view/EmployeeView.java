@@ -177,16 +177,13 @@ public class EmployeeView extends VerticalLayout implements View, LoginService.L
 			for (EmployeeSkill empSkill : employeeSkills) {
 				if (empSkill.getLevel() != 0) {
 					ProgressBar b = new ProgressBar();
-					b.setCaption(allSkills.get((int) (empSkill.getSkill().getId() - 1)).getName() + " "
-							+ empSkill.getLevel());
-
+					b.setCaption(empSkill.getSkill().getName() + " " + empSkill.getLevel());
 					b.setWidth("70%");
 					b.setValue((float) (empSkill.getLevel() * 0.1));
 					row.addComponent(b);
 				}
 			}
 		} catch(Exception e) {
-			
 		}
 	}
 

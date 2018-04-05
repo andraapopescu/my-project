@@ -7,12 +7,12 @@ var newData;
 
 
 $(document).ready(function(){
-      $("body").append('<h1><center>' + " Statistics for the smallest and biggest skills' value " +'</center></h1></br></br>')
+      $("body").append('<h1>' + " Statistics for the smallest and biggest skills' value " +'</h1></br></br>')
 	  $("body").append('<div id="statistics_graph"></div>');
 	  getData(getDataUrl);
-	  
+
 	  newData = getNewJson(mydata);
-	
+
 	  Morris.Bar({
 	  element: 'statistics_graph',
 	  data: newData,
@@ -20,6 +20,7 @@ $(document).ready(function(){
 	  ykeys: ['a', 'b'],
 	  labels: [ 'Min', 'Max' ]
 	});
+	alert(newData);
 });
 
 function getNewJson(data) {

@@ -13,11 +13,13 @@ public class Quiz {
     private String specialization;
     private String question;
     private String answer;
+    private boolean isActive;
 
-    public Quiz( String specialization, String question, String answer ) {
+    public Quiz( String specialization, String question, String answer, boolean isActive ) {
         this.specialization = specialization;
         this.question = question;
         this.answer = answer;
+        this.isActive = isActive;
     }
 
     public Quiz() {
@@ -55,6 +57,14 @@ public class Quiz {
         this.answer = answer;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive( boolean active ) {
+        isActive = active;
+    }
+
     @Override
     public String toString() {
         return "Quiz{" +
@@ -62,6 +72,7 @@ public class Quiz {
                 ", specialization='" + specialization + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
+                ", isActive=" + isActive +
                 '}';
     }
 }

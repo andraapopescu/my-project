@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import application.demo.service.EmployeeService;
+import application.demo.ui.layouts.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.annotations.Theme;
@@ -41,15 +42,6 @@ import application.demo.domain.User;
 import application.demo.security.FilterLoginService;
 import application.demo.security.ServiceProvider;
 import application.demo.ui.layouts.ValoMenuLayout;
-import application.demo.ui.layouts.view.AddEmployeeView;
-import application.demo.ui.layouts.view.AddSkillPopup;
-import application.demo.ui.layouts.view.EditEmployeeView;
-import application.demo.ui.layouts.view.EmployeeView;
-import application.demo.ui.layouts.view.MessagePopop;
-import application.demo.ui.layouts.view.MessageView;
-import application.demo.ui.layouts.view.NewsView;
-import application.demo.ui.layouts.view.SearchEmployeesBySkillsView;
-import application.demo.ui.layouts.view.SearchView;
 
 @Theme("tests-valo")
 @Title("Main Page")
@@ -158,6 +150,7 @@ public class MainPage extends UI {
 		navigator.addView(EditEmployeeView.NAME, EditEmployeeView.class);
 		navigator.addView(SearchEmployeesBySkillsView.NAME, SearchEmployeesBySkillsView.class);
 		navigator.addView(MessageView.NAME, MessageView.class);
+		navigator.addView(QuizView.NAME, QuizView.class);
 
 		final String f = Page.getCurrent().getUriFragment();
 		if (f == null || f.equals("")) {
@@ -369,7 +362,14 @@ public class MainPage extends UI {
 		logo.setSizeUndefined();
 		logo.setPrimaryStyleName("valo-menu-logo");
 		menu.addComponent(logo);
-		
+
+		Button quiz = new Button("Quiz");
+		quiz.setIcon(FontAwesome.GRADUATION_CAP);
+		quiz.setPrimaryStyleName("valo-menu-item");
+		quiz.setHtmlContentAllowed(true);
+		quiz.addClickListener(new OnClickNavigateTo(QuizView.NAME));
+		menu.addComponent(quiz);
+
 		Button statistics = new Button("Statistics");
 		statistics.setIcon(FontAwesome.SORT_AMOUNT_DESC);
 		statistics.setPrimaryStyleName("valo-menu-item");

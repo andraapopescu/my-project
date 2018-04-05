@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import application.demo.service.*;
+import application.demo.ui.components.IntegerField;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.RegexpValidator;
@@ -38,12 +39,12 @@ public class AddEmployeeView extends VerticalLayout implements View {
 	private static final long serialVersionUID = 1L;
 
 	public final static String NAME = "addEmployee";
-	private static TextField firstName, lastName, email, address, phone, salary;
+	private static TextField firstName, lastName, email, address, phone;
+	private IntegerField salary;
 	private ArrayList<CustomSlider> sliders;
 	private CustomImageUploader up;
 	private static DateField birthday, employmentDate;
 
-	@SuppressWarnings("deprecation")
 	public AddEmployeeView() {
 		VerticalLayout header = new VerticalLayout();
 		header.setMargin(false);
@@ -52,9 +53,7 @@ public class AddEmployeeView extends VerticalLayout implements View {
 		setComponentAlignment(header, Alignment.TOP_CENTER);
 
 		up = new CustomImageUploader("./src/main/resources/images/default.png");
-
 		header.addComponent(up);
-		//////////
 
 		final FormLayout form = new FormLayout();
 		form.setMargin(false);
@@ -110,7 +109,8 @@ public class AddEmployeeView extends VerticalLayout implements View {
 		employmentDate.setValue(new Date(80, 0, 31));
 		form.addComponent(employmentDate);
 
-		salary = new TextField("Salary");
+		salary = new IntegerField(String.valueOf(0));
+		salary.setCaption("Salary");
 		salary.setWidth("50%");
 		form.addComponent(salary);
 		salary.setRequired(true);
@@ -141,7 +141,6 @@ public class AddEmployeeView extends VerticalLayout implements View {
 			sliders.add(slider);
 			row.addComponent(slider);
 			i++;
-
 		}
 
 		Page.getCurrent().getStyles().add(LoginPageCssHelper.createStyleForSliders());
@@ -153,7 +152,6 @@ public class AddEmployeeView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-
 				try {
 					validateFields();
 					addEmployeeToDatabase();
@@ -174,16 +172,14 @@ public class AddEmployeeView extends VerticalLayout implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-
 	}
 
 	private void addValidators() {
-		email.addValidator(new EmailValidator("Email address is not valid "));
-		firstName.addValidator(new StringLengthValidator("At least 3 characters !", 3, 15, false));
-		lastName.addValidator(new StringLengthValidator("At least 3 characters !", 3, 15, false));
-		phone.addValidator(new RegexpValidator("[0-9]+", "Incorrect phone number !"));
-
-//		 salary.addValidator((Validator) new FormatNumberTag());
+		email.addValidator(new EmailValidator("Email address is not valid!"));
+		firstName.addValidator(new StringLengthValidator("At least 3 characters!", 3, 15, false));
+		lastName.addValidator(new StringLengthValidator("At least 3 characters!", 3, 15, false));
+		phone.addValidator(new RegexpValidator("[0-9]+", "Incorrect phone number!"));
+		salary.addValidator(new RegexpValidator("^[1-9]\\d*$", "Incorrect salary format!"));
 	}
 
 	private void validateFields() {

@@ -24,7 +24,7 @@ public class EmployeeSkill {
 		
 	}
 
-	@ManyToOne(cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_employee")
 
 	private Employee employee;
