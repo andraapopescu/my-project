@@ -25,9 +25,6 @@ public class Employee {
 	private Date employmentDate;
 	private int salary;
 
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
-//	public ArrayList<EmployeeSkill> employeeSkill;
-
 	public Employee() {
 
 	}

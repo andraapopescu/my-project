@@ -39,23 +39,22 @@ public class FilterLoginService implements LoginService {
 				if(loggedUser.getRole().equals("user"))  {
 					currentEmployee = EmployeeService.findEmployeeByEmail(loggedUser.getUserName()).get(0);
 				}
-				
-				else { 
+
+				else {
 					currentEmployee = EmployeeService.findEmployeeByLastName("admin").get(0);
 					System.err.println(currentEmployee.getFirstName());
 				 }
-				 
+
 				this.fireUserLoggedIn();
-				
+
 			} else {
 				fireUserLoginFailed();				
 			}
 		} 
 		catch(Exception e) {
-			System.out.println("*****");
 			UI.getCurrent().getPage().setLocation("http://localhost:8080");
 		}
-		}
+	}
 	}
 
 	public String encryptPassword(String password) {

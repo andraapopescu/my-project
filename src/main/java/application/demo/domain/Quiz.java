@@ -18,7 +18,7 @@ public class Quiz {
     @JoinColumn(name = "id_employee")
     private Employee employee;
 
-    public Quiz( Date expirationDate, Employee employee ) {
+    public Quiz(Date expirationDate, Employee employee) {
         this.expirationDate = expirationDate;
         this.employee = employee;
     }

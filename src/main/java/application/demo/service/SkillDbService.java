@@ -2,7 +2,6 @@ package application.demo.service;
 
 import java.util.List;
 
-import application.demo.domain.DatabaseService;
 import application.demo.domain.Skill;
 
 public interface SkillDbService extends DatabaseService<Skill, Long> {

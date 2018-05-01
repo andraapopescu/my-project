@@ -1,7 +1,5 @@
 package application.demo.service;
 
-import application.demo.domain.DatabaseService;
-import application.demo.domain.Employee;
 import application.demo.domain.Question;
 import application.demo.domain.Quiz;
 

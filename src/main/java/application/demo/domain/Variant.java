@@ -12,7 +12,7 @@ public class Variant {
     private String variant;
 
     @ManyToOne(cascade= CascadeType.MERGE , fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_quiz")
+    @JoinColumn(name = "id_question")
     private Question question;
 
     public Variant( String variant, Question question ) {
