@@ -14,6 +14,11 @@ public class Question {
     private String question;
     private String answer;
 
+    private String variant1;
+    private String variant2;
+    private String variant3;
+    private String variant4;
+
 
     @ManyToOne(cascade= CascadeType.MERGE , fetch = FetchType.EAGER)
     @JoinColumn(name = "id_quiz")
@@ -22,18 +27,14 @@ public class Question {
     public Question() {
     }
 
-    public Question( String specialization, String question, String answer, Quiz quiz ) {
+    public Question( String specialization, String question, String answer, String variant1, String variant2, String variant3, String variant4, Quiz quiz ) {
         this.specialization = specialization;
         this.question = question;
         this.answer = answer;
-        this.quiz = quiz;
-    }
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz( Quiz quiz ) {
+        this.variant1 = variant1;
+        this.variant2 = variant2;
+        this.variant3 = variant3;
+        this.variant4 = variant4;
         this.quiz = quiz;
     }
 
@@ -69,15 +70,44 @@ public class Question {
         this.answer = answer;
     }
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "id=" + id +
-                ", specialization='" + specialization + '\'' +
-                ", question='" + question + '\'' +
-                ", answer='" + answer + '\'' +
-                ", quiz=" + quiz +
-                '}';
+    public String getVariant1() {
+        return variant1;
+    }
+
+    public void setVariant1( String variant1 ) {
+        this.variant1 = variant1;
+    }
+
+    public String getVariant2() {
+        return variant2;
+    }
+
+    public void setVariant2( String variant2 ) {
+        this.variant2 = variant2;
+    }
+
+    public String getVariant3() {
+        return variant3;
+    }
+
+    public void setVariant3( String variant3 ) {
+        this.variant3 = variant3;
+    }
+
+    public String getVariant4() {
+        return variant4;
+    }
+
+    public void setVariant4( String variant4 ) {
+        this.variant4 = variant4;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz( Quiz quiz ) {
+        this.quiz = quiz;
     }
 }
 

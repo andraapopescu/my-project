@@ -127,20 +127,23 @@ public class AddEmployeeView extends VerticalLayout implements View {
 
 		addValidators();
 
-		ArrayList<Skill> skills = SkillService.getAllSkills();
-		int i = 1;
+		try {
+			ArrayList<Skill> skills = SkillService.getAllSkills();
+			int i = 1;
 
-		sliders = new ArrayList<CustomSlider>();
-		
-		for (Skill s : skills) {
-			CustomSlider slider = new CustomSlider(s.getName(), i);
-			if (s.getId() != 1) {
-				slider.addStyleName("slider");
+			sliders = new ArrayList<CustomSlider>();
+
+			for(Skill s : skills) {
+				CustomSlider slider = new CustomSlider(s.getName(), i);
+				if(s.getId() != 1) {
+					slider.addStyleName("slider");
+				}
+
+				sliders.add(slider);
+				row.addComponent(slider);
+				i++;
 			}
-
-			sliders.add(slider);
-			row.addComponent(slider);
-			i++;
+		} catch(NullPointerException e) {
 		}
 
 		Page.getCurrent().getStyles().add(LoginPageCssHelper.createStyleForSliders());
@@ -152,12 +155,13 @@ public class AddEmployeeView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				try {
+//				try {
+//					addValidators();
 					validateFields();
 					addEmployeeToDatabase();
-				} catch (InvalidValueException e) {
-					
-				}
+//				} catch (InvalidValueException e) {
+//
+//				}
 			}
 		});
 
@@ -187,6 +191,7 @@ public class AddEmployeeView extends VerticalLayout implements View {
 		lastName.validate();
 		email.validate();
 		phone.validate();
+		salary.validate();
 	}
 
 	public void addEmployeeToDatabase() {
@@ -198,9 +203,6 @@ public class AddEmployeeView extends VerticalLayout implements View {
 		String addr = address.getValue();
 		String phoneNr = phone.getValue();
 		int sal = Integer.parseInt(salary.getValue());
-
-//		List<Skill> skills = new ArrayList<Skill>();
-//		skills = RestConsumer.getAllSkills();
 
 		Employee employee = new Employee(fName, lName, bDay, addr, mail, phoneNr, empDate, sal);
 		EmployeeService.saveEmployee(employee);

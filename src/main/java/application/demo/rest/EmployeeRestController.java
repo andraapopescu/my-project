@@ -96,13 +96,12 @@ public class EmployeeRestController {
 	public ResponseEntity<Employee> deleteEmployee(@PathVariable("id") long id) {
 		ArrayList<HistoryEmployeeSkill> hesList = HistoryEmployeeSkillService.getHistoryEmployeeSkillById(id);
 
-		/*System.out.println("size " + hesList.size());
 		if (hesList != null) {
 			for (HistoryEmployeeSkill h : hesList) {
 				System.out.println(h.getEmployee().getLastName());
 				hess.delete(h);
 			}
-		}*/
+		}
 		
 		Employee result = es.findOne(id);
 		if (result == null) {

@@ -38,26 +38,26 @@ public class VariantService {
         return result;
     }
 
-    public static ArrayList<Variant> getVariantByQuiz(long id) {
-        ArrayList<Variant> result = null;
-
-        URL u;
-
-        try {
-            u = new URL(REST_SERVICE_URI + "/variant/quiz/" + id);
-            result = mapper.readValue(u, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Variant.class));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
+//    public static ArrayList<Variant> getVariantByQuiz(long id) {
+//        ArrayList<Variant> result = null;
+//
+//        URL u;
+//
+//        try {
+//            u = new URL(REST_SERVICE_URI + "/variant/quiz/" + id);
+//            result = mapper.readValue(u, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Variant.class));
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (JsonParseException e) {
+//            e.printStackTrace();
+//        } catch (JsonMappingException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return result;
+//    }
 
     public static Variant getVariantById(long id) {
         Variant result = null;

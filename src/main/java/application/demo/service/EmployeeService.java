@@ -2,6 +2,7 @@ package application.demo.service;
 
 import application.demo.domain.Employee;
 import application.demo.domain.EmployeeSkill;
+import application.demo.domain.HistoryEmployeeSkill;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 
 import static application.demo.service.EmployeeSkillService.deleteEmployeeSkillsById;
 import static application.demo.service.EmployeeSkillService.getEmployeeSkillByEmployee;
+import static application.demo.service.EmployeeSkillService.getSkillHistoryByEmployee;
+import static application.demo.service.HistoryEmployeeSkillService.deleteHistoryById;
 
 public class EmployeeService {
 
@@ -154,6 +157,11 @@ public class EmployeeService {
         RestTemplate restTemplate = new RestTemplate();
 
         ArrayList<EmployeeSkill> employeeSkills = getEmployeeSkillByEmployee(employee.getId());
+        ArrayList<HistoryEmployeeSkill> historyEmployeeSkills = getSkillHistoryByEmployee(employee.getId());
+
+        for(HistoryEmployeeSkill hes : historyEmployeeSkills) {
+            deleteHistoryById(hes.getId());
+        }
 
         for(EmployeeSkill es : employeeSkills) {
             deleteEmployeeSkillsById(es.getId());

@@ -37,12 +37,12 @@ public class VariantRestController {
         return vs.findOne(id);
     }
 
-    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
-    public ArrayList<Variant> getVariantsByQuiz(@PathVariable("id") long id) {
-        Question question = QuestionService.getQuestionById(id);
-
-        return (ArrayList<Variant>) vs.findByQuestion(question);
-    }
+//    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
+//    public ArrayList<Variant> getVariantsByQuiz(@PathVariable("id") long id) {
+//        Question question = QuestionService.getQuestionById(id);
+//
+//        return (ArrayList<Variant>) vs.findByQuestion(question);
+//    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity<Void> addVariant(@RequestBody Variant variant, UriComponentsBuilder ucBuilder ) {

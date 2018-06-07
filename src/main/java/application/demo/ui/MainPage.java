@@ -150,6 +150,7 @@ public class MainPage extends UI {
 		navigator.addView(EditEmployeeView.NAME, EditEmployeeView.class);
 		navigator.addView(SearchEmployeesBySkillsView.NAME, SearchEmployeesBySkillsView.class);
 		navigator.addView(MessageView.NAME, MessageView.class);
+		navigator.addView(AddQuestionView.NAME, AddQuestionView.class);
 		navigator.addView(QuizView.NAME, QuizView.class);
 
 		final String f = Page.getCurrent().getUriFragment();
@@ -367,7 +368,7 @@ public class MainPage extends UI {
 		quiz.setIcon(FontAwesome.GRADUATION_CAP);
 		quiz.setPrimaryStyleName("valo-menu-item");
 		quiz.setHtmlContentAllowed(true);
-		quiz.addClickListener(new OnClickNavigateTo(QuizView.NAME));
+		quiz.addClickListener(new OnClickNavigateTo(AddQuestionView.NAME));
 		menu.addComponent(quiz);
 
 		Button statistics = new Button("Statistics");

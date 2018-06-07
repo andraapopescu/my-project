@@ -12,9 +12,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by andra.popescu on 3/27/2018.
- */
 public class HistoryEmployeeSkillService {
 
     public static String REST_SERVICE_URI = "http://localhost:8080";

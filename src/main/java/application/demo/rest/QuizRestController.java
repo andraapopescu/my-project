@@ -36,7 +36,7 @@ public class QuizRestController {
         return qzs.findOne(id);
     }
 
-    @RequestMapping(value = "/question/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
     public ArrayList<Quiz> getQuizByEmployee(@PathVariable("id") long id) {
         Employee employee = EmployeeService.getEmployeeById(id);
 

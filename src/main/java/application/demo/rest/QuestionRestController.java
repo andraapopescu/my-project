@@ -1,7 +1,9 @@
 package application.demo.rest;
 
-import application.demo.domain.Question;
+import application.demo.domain.*;
+import application.demo.service.EmployeeService;
 import application.demo.service.QuestionDbService;
+import application.demo.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,5 +44,12 @@ public class QuestionRestController {
         headers.setLocation(ucBuilder.path("question/{id}").buildAndExpand(question.getId()).toUri());
 
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/quiz/{id}", method = RequestMethod.GET)
+    public ArrayList<Question> getQuestionsByQuiz( @PathVariable("id") long id) {
+        Quiz quiz = QuizService.getQuizById(id);
+
+        return (ArrayList<Question>) qs.findByQuiz(quiz);
     }
 }

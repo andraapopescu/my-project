@@ -35,7 +35,7 @@ public class NewsView extends VerticalLayout implements View {
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("E , d MMMMM yyyy , hh:mm ");
 	
-	private ArrayList<News> news = NewsService.getAllNews();
+	ArrayList<News> news = NewsService.getAllNews();
 
 	VerticalLayout vLayout = new VerticalLayout();
 	VerticalLayout leftVLayout = new VerticalLayout();
@@ -45,6 +45,9 @@ public class NewsView extends VerticalLayout implements View {
 	Button addButton = new Button("Add News");
 
 	public  NewsView() {
+		if(news == null) {
+			news = new ArrayList<>();
+		}
 
 		Collections.reverse(news);
 		vLayout = createLayout();

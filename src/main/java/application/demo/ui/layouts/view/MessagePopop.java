@@ -1,7 +1,9 @@
 package application.demo.ui.layouts.view;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -15,23 +17,16 @@ import javax.mail.internet.MimeMessage;
 import application.demo.service.EmployeeService;
 import application.demo.service.MessageService;
 import com.vaadin.shared.ui.combobox.FilteringMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import application.demo.domain.Employee;
 import application.demo.domain.User;
 import application.demo.domain.Message;
 import application.demo.security.FilterLoginService;
+import javassist.tools.reflect.Sample;
 
 public class MessagePopop extends Window {
 	private static final long serialVersionUID = 1L;
@@ -177,6 +172,9 @@ public class MessagePopop extends Window {
 				}
 			}
 		});
+
+
+// Disable one item by its item ID
 
 		result.addComponent(sendButton);
 		result.setComponentAlignment(sendButton, Alignment.BOTTOM_LEFT);

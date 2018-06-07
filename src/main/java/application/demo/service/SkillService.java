@@ -33,7 +33,7 @@ public class SkillService {
         } catch (JsonParseException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

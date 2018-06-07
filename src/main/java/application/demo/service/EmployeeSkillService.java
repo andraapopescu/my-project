@@ -13,9 +13,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by andra.popescu on 3/27/2018.
- */
 public class EmployeeSkillService {
 
     public static String REST_SERVICE_URI = "http://localhost:8080";
@@ -116,13 +113,13 @@ public class EmployeeSkillService {
             result = mapper.readValue(u,
                     mapper.getTypeFactory().constructCollectionType(ArrayList.class, EmployeeSkill.class));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (JsonParseException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         return result;
