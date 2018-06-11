@@ -51,8 +51,8 @@ public class MessagePopop extends Window {
 		setContent(vLayout);
 
 		this.center();
-		this.setHeight("90%");
-		this.setWidth("50%");
+		this.setHeight("80%");
+		this.setWidth("40%");
 	}
 
 	public MessagePopop(Message message) {

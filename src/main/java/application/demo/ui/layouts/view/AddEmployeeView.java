@@ -155,13 +155,8 @@ public class AddEmployeeView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				try {
-//					addValidators();
 					validateFields();
 					addEmployeeToDatabase();
-//				} catch (InvalidValueException e) {
-//
-//				}
 			}
 		});
 

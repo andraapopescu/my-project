@@ -62,13 +62,7 @@ public class SearchPageHelper {
 	
 	public static Grid createEmployeeGridForUser() {
 		Grid result = new Grid();
-		
-//		Employee e = FilterLoginService.currentEmployee;
-//		
-//		List<Employee> list = RestConsumer.getAllEmployees();
-//		System.err.println(list.size() + " 1");
-//		
-//		BeanItemContainer<Employee> container = new BeanItemContainer<>(Employee.class, list);
+
 		result.setContainerDataSource(CreateBeanContainerAllColleagues());
 		result.setSizeFull();
 		result.getColumn("id").setWidth(80);
@@ -104,7 +98,6 @@ public class SearchPageHelper {
 		result.addAll(EmployeeModel.getAllColleagues());
 
 		return result;
-
 	}
 
 	public static BeanItemContainer<Employee> CreateBeanContainerByEmail(String email) {
@@ -138,52 +131,5 @@ public class SearchPageHelper {
 
 		return result;
 	}
-
-//	private static Grid setColumnFiltering(boolean filtered, Grid result) {
-//		HeaderRow filteringHeader = null;
-//		if (filtered && filteringHeader == null) {
-//			filteringHeader = result.appendHeaderRow();
-//			List<Column> arr = result.getColumns();
-//			TextField[] filterFields = new TextField[7];
-//
-//			for (int i = 0; i < arr.size(); i++) {
-//				String columnId = arr.get(i).getPropertyId().toString();
-//				filterFields[i] = getColumnFilter(columnId, result);
-//				filteringHeader.getCell(columnId).setComponent(filterFields[i]);
-//				filteringHeader.getCell(columnId).setStyleName("filter-header");
-//			}
-//		} else if (!filtered && filteringHeader != null) {
-//			result.removeHeaderRow(filteringHeader);
-//			filteringHeader = null;
-//		}
-//		return result;
-//	}
-
-//	private static TextField getColumnFilter(final Object columnId, final Grid emp) {
-//		TextField result = new TextField();
-//		result.setWidth("100%");
-//		result.addStyleName(ValoTheme.TEXTFIELD_TINY);
-//		result.setInputPrompt("Filter");
-//		result.addTextChangeListener(new TextChangeListener() {
-//			private static final long serialVersionUID = 1L;
-//			
-//			SimpleStringFilter filter = null;
-//
-//			@Override
-//			public void textChange(TextChangeEvent event) {
-//				Filterable f = (Filterable) emp.getContainerDataSource();
-//				if (filter != null) {
-//					f.removeContainerFilter(filter);
-//				}
-//				filter = new SimpleStringFilter(columnId, event.getText(), true, true);
-//				f.addContainerFilter(filter);
-//				emp.cancelEditor();
-//			}
-//		});
-//
-//		return result;
-//	}
-	
-
 
 }

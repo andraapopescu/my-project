@@ -47,8 +47,6 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
     private static DateField birthday, employmentDate;
     private long employeeId;
 
-//	SimpleDateFormat sdf = new SimpleDateFormat("E , d MMMMM yyyy , hh:mm ");
-
     @Override
     public void enter( ViewChangeEvent event ) {
         if (event.getParameters() != null) {

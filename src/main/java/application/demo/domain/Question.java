@@ -24,10 +24,14 @@ public class Question {
     @JoinColumn(name = "id_quiz")
     private Quiz quiz;
 
-    public Question() {
+    public Question( String value, String questionAreaValue, String answerValue, String s, String value1, String s1, String value2 ) {
     }
 
-    public Question( String specialization, String question, String answer, String variant1, String variant2, String variant3, String variant4, Quiz quiz ) {
+    public Question() {
+
+    }
+
+    public Question(String specialization, String question, String answer, String variant1, String variant2, String variant3, String variant4, Quiz quiz ) {
         this.specialization = specialization;
         this.question = question;
         this.answer = answer;

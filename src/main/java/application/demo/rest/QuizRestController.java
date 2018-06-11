@@ -1,7 +1,9 @@
 package application.demo.rest;
 
 import application.demo.domain.Employee;
+import application.demo.domain.Question;
 import application.demo.domain.Quiz;
+import application.demo.domain.Skill;
 import application.demo.service.EmployeeService;
 import application.demo.service.QuizDbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +54,5 @@ public class QuizRestController {
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
+
 }

@@ -1,6 +1,7 @@
 package application.demo.service;
 
 import application.demo.domain.Question;
+import application.demo.domain.User;
 import application.demo.domain.Variant;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -104,6 +105,17 @@ public class QuestionService {
         }
 
         return result;
+    }
+
+
+    public static void deleteQuestion(long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(REST_SERVICE_URI + "/question/deleteQuestion/" + id);
+    }
+
+    public static void updateQuestion(Question question) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(REST_SERVICE_URI + "/question/updateQuestion/", question);
     }
 
 }

@@ -52,4 +52,26 @@ public class QuestionRestController {
 
         return (ArrayList<Question>) qs.findByQuiz(quiz);
     }
+
+    @RequestMapping(value = "/deleteQuestion/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Question> deleteQuestion( @PathVariable("id") long id) {
+        Question result = qs.findOne(id);
+        if(result == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        qs.delete(result);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(value = "/updateQuestion" , method = RequestMethod.PUT)
+    ResponseEntity<Question> updateQuestion(@RequestBody Question question) {
+        if(question == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        qs.save(question);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
