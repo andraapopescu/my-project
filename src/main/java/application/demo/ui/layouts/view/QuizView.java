@@ -20,14 +20,8 @@ import java.util.List;
 public class QuizView extends VerticalLayout implements View {
 
     public final static String NAME = "QuizView";
-//    private static Grid messagesGrid;
     private static VerticalLayout vLayout;
-//    private static HorizontalLayout hLayout;
 
-//    public static boolean isSelected = false;
-//
-//    private static List<Message> messages = new ArrayList<Message>();
-//
     private Employee currentEmployee;
 
     @Override

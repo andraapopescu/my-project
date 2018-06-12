@@ -225,7 +225,7 @@ public class MessagePopop extends Window {
 				}
 
 				message = new Message(from, new Date(), subject.getValue(), text.getValue(), employee);
-				System.err.println(message);
+//				System.err.println(message);
 
 				MessageService.saveMessage(message);
 				Notification.show("Message SENT !! ");

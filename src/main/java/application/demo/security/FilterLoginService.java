@@ -17,9 +17,6 @@ import application.demo.service.EmployeeService;
 
 public class FilterLoginService implements LoginService {
 
-    @Autowired
-    EmployeeService es;
-
     public static Employee currentEmployee;
     public static User loggedUser;
 
@@ -40,7 +37,6 @@ public class FilterLoginService implements LoginService {
                         currentEmployee = EmployeeService.findEmployeeByEmail(loggedUser.getUserName()).get(0);
                     } else {
                         currentEmployee = EmployeeService.findEmployeeByLastName("admin").get(0);
-                        System.err.println(currentEmployee.getFirstName());
                     }
 
                     this.fireUserLoggedIn();
@@ -95,7 +91,6 @@ public class FilterLoginService implements LoginService {
         }
 
         UI.getCurrent().getPage().setLocation("http://localhost:8080/mainPage");
-        System.err.println("*******");
     }
 
     @Override

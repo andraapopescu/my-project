@@ -151,7 +151,7 @@ public class MainPage extends UI {
 		navigator.addView(SearchEmployeesBySkillsView.NAME, SearchEmployeesBySkillsView.class);
 		navigator.addView(MessageView.NAME, MessageView.class);
 		navigator.addView(AddQuestionView.NAME, AddQuestionView.class);
-		navigator.addView(QuizView.NAME, QuizView.class);
+		navigator.addView(GenerateQuizView.NAME, GenerateQuizView.class);
 
 		final String f = Page.getCurrent().getUriFragment();
 		if (f == null || f.equals("")) {
@@ -364,11 +364,18 @@ public class MainPage extends UI {
 		logo.setPrimaryStyleName("valo-menu-logo");
 		menu.addComponent(logo);
 
-		Button quiz = new Button("Question");
-		quiz.setIcon(FontAwesome.GRADUATION_CAP);
+		Button question = new Button("Question");
+		question.setIcon(FontAwesome.GRADUATION_CAP);
+		question.setPrimaryStyleName("valo-menu-item");
+		question.setHtmlContentAllowed(true);
+		question.addClickListener(new OnClickNavigateTo(AddQuestionView.NAME));
+		menu.addComponent(question);
+
+		Button quiz = new Button("Generate Quiz");
+		quiz.setIcon(FontAwesome.PENCIL_SQUARE_O);
 		quiz.setPrimaryStyleName("valo-menu-item");
 		quiz.setHtmlContentAllowed(true);
-		quiz.addClickListener(new OnClickNavigateTo(AddQuestionView.NAME));
+		quiz.addClickListener(new OnClickNavigateTo(GenerateQuizView.NAME));
 		menu.addComponent(quiz);
 
 		Button statistics = new Button("Statistics");
