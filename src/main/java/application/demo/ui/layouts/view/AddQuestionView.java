@@ -48,10 +48,31 @@ public class AddQuestionView extends VerticalLayout implements View {
 
     @Override
     public void enter( ViewChangeListener.ViewChangeEvent event ) {
-        questionsGrid = createQuestionsGrid();
+        if(QuestionService.getAllQuestions() != null) {
+            questionsGrid = createQuestionsGrid();
+
+            questionsGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
+            questionsGrid.addSelectionListener(new SelectionEvent.SelectionListener() {
+
+                @Override
+                public void select(com.vaadin.event.SelectionEvent event) {
+                    if (questionsGrid.getSelectedRow() != null) {
+                        question = (Question) questionsGrid.getSelectedRow();
+
+                        Window subWindow = new Window("My Popup Window");
+                        QuestionPopup details = new QuestionPopup(question);
+                        UI.getCurrent().addWindow(details);
+                    }
+                }
+            });
+
+        }
 
         vLeftLayout = createFormForAddingQuestions();
-        vRightLayout = createLayoutForGrid();
+
+        if(QuestionService.getAllQuestions() != null) {
+            vRightLayout = createLayoutForGrid();
+        }
 
         hLayout = new HorizontalLayout(vLeftLayout, vRightLayout);
         addComponent(hLayout);
@@ -59,21 +80,6 @@ public class AddQuestionView extends VerticalLayout implements View {
 
         this.setSpacing(true);
         this.setMargin(true);
-
-        questionsGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
-        questionsGrid.addSelectionListener(new SelectionEvent.SelectionListener() {
-
-            @Override
-            public void select(com.vaadin.event.SelectionEvent event) {
-                if (questionsGrid.getSelectedRow() != null) {
-                    question = (Question) questionsGrid.getSelectedRow();
-
-                    Window subWindow = new Window("My Popup Window");
-                    QuestionPopup details = new QuestionPopup(question);
-                        UI.getCurrent().addWindow(details);
-                    }
-                }
-        });
 
     }
 
@@ -238,7 +244,10 @@ public class AddQuestionView extends VerticalLayout implements View {
 
     private BeanItemContainer<Question> createQuestionsBeanContainer() {
         BeanItemContainer<Question> result = new BeanItemContainer<Question>(Question.class);
-        result.addAll(QuestionService.getAllQuestions());
+        if(QuestionService.getAllQuestions() != null) {
+            result.addAll(QuestionService.getAllQuestions());
+        }
+
 
         return result;
     }

@@ -13,6 +13,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.*;
 
@@ -74,7 +75,7 @@ public class GenerateQuizView extends VerticalLayout implements View {
         form.addComponent(descriptionField);
 
         expirationDate = new DateField("Quiz expiration date: ");
-        expirationDate.setValue(new Date());
+        expirationDate.setValue(DateUtils.addDays(new Date(), 1));
         expirationDate.setTimeZone(TimeZone.getTimeZone("CET+1"));
         form.addComponent(expirationDate);
 
@@ -141,8 +142,9 @@ public class GenerateQuizView extends VerticalLayout implements View {
             Notification.show("You have to choose the candidate for the quiz!", Notification.Type.ERROR_MESSAGE);
         } else {
             if(questionsGrid.getSelectedRows() != null) {
-                if(questionsGrid.getSelectedRows().size() != 5) {
-                    Notification.show("A quiz must have exactly 10 questions!", Notification.Type.ERROR_MESSAGE);
+                if(questionsGrid.getSelectedRows().size() != 10) {
+                    Notification.show("A quiz must have exactly 10 questions! Now, there are just " +
+                            questionsGrid.getSelectedRows().size() + "selected.", Notification.Type.ERROR_MESSAGE);
                 } else {
                     Collection<Object> selectedQuestions = questionsGrid.getSelectedRows();
 
@@ -152,7 +154,14 @@ public class GenerateQuizView extends VerticalLayout implements View {
                     Quiz q = new Quiz(expirationDate.getValue(), candidate, descriptionField.getValue());
                     QuizService.saveQuiz(q);
 
-                    Quiz lastQuiz = QuizService.getQuizById(QuizService.getAllQuizzes().size() - 1);
+                    try {
+                        Thread.sleep(1000);
+                    } catch(InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    long id = QuizService.getAllQuizzes().get(QuizService.getAllQuizzes().size() -1).getId();
+                    Quiz lastQuiz = QuizService.getQuizById(id);
                     QuizQuestion quizQuestion;
 
                     for(Object o : selectedQuestions) {
@@ -162,6 +171,7 @@ public class GenerateQuizView extends VerticalLayout implements View {
 
                     Notification.show("A new quiz has just been created!", Notification.Type.HUMANIZED_MESSAGE);
                     candidatesComboBox.clear();
+                    descriptionField.clear();
                 }
             }
         }
@@ -182,7 +192,14 @@ public class GenerateQuizView extends VerticalLayout implements View {
             Quiz q = new Quiz(expirationDate.getValue(), candidate, descriptionField.getValue());
             QuizService.saveQuiz(q);
 
-            Quiz lastQuiz = QuizService.getQuizById(QuizService.getAllQuizzes().size() - 1);
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            long id = QuizService.getAllQuizzes().get(QuizService.getAllQuizzes().size() -1).getId();
+            Quiz lastQuiz = QuizService.getQuizById(id);
             QuizQuestion quizQuestion;
 
             if(allAvailableQuestions.size() < 10) {
@@ -192,13 +209,14 @@ public class GenerateQuizView extends VerticalLayout implements View {
                 for(int i = 0; i < 10; i++) {
                     quizQuestion = new QuizQuestion(lastQuiz, allAvailableQuestions.get(i));
                     QuizQuestionService.save(quizQuestion);
+                }
 
                     Notification.show("A new quiz has just been generated!", Notification.Type.HUMANIZED_MESSAGE);
                     candidatesComboBox.clear();
+                    descriptionField.clear();
                 }
             }
         }
-    }
 
     private Grid createQuestionsGrid() {
         Grid result = new Grid();

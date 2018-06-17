@@ -64,7 +64,6 @@ public class EmployeeModel {
 		for (Employee e : allEmployees) {
 			if (e.getPhone() != null) {
 				if (e.getPhone().contains(phone)) {
-					System.out.println(e.getFirstName() + "  " + e.getPhone());
 					result.add(e);
 				}
 			}

@@ -40,7 +40,6 @@ public class FilterLoginService implements LoginService {
                         currentEmployee = EmployeeService.findEmployeeByEmail(loggedUser.getUserName()).get(0);
                         employeeWishSkills = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
 
-                        System.out.println(employeeWishSkills);
                     } else {
                         currentEmployee = EmployeeService.findEmployeeByLastName("admin").get(0);
                     }
