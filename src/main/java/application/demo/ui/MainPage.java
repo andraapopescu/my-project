@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import application.demo.domain.EmployeeSkill;
+import application.demo.domain.Quiz;
 import application.demo.service.EmployeeService;
 import application.demo.ui.layouts.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,26 +51,11 @@ import application.demo.ui.layouts.ValoMenuLayout;
 public class MainPage extends UI {
 	private static final long serialVersionUID = 1L;
 
-	Grid employeesGrid;
-	static VerticalLayout container;
-	static HorizontalLayout searchFormLayout;
-	boolean editing = false;
-
-	Employee selectedEmployee = null;
-
-	User user;
-	StreamResource resource;
-	StreamSource source;
-
-	boolean showState = false;
-
-	@Autowired
-	SkillDbService ss;
-
 	private final class OnClickNavigateTo implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
 
 		private final String name;
+		private EmployeeSkill employeeSkill;
 
 		private OnClickNavigateTo(String name) {
 			this.name = name;
@@ -85,7 +72,6 @@ public class MainPage extends UI {
 
 	ComponentContainer viewDisplay = root.getContentContainer();
 	CssLayout menu = new CssLayout();
-	CssLayout menuItemsLayout = new CssLayout();
 
 	{
 		menu.setId("testMenu");
@@ -123,9 +109,6 @@ public class MainPage extends UI {
 			Responsive.makeResponsive(this);
 		}
 
-		// System.out.println(hashingwithSHA("admin"));
-		// System.out.println(hashingwithSHA("user"));
-
 		getPage().setTitle("Demo");
 
 		root.addLeftMenu(buildLeftMenu());
@@ -152,12 +135,13 @@ public class MainPage extends UI {
 		navigator.addView(MessageView.NAME, MessageView.class);
 		navigator.addView(AddQuestionView.NAME, AddQuestionView.class);
 		navigator.addView(GenerateQuizView.NAME, GenerateQuizView.class);
+		navigator.addView(QuizView.NAME, QuizView.class);
+		navigator.addView(StartQuizView.NAME, StartQuizView.class);
 
 		final String f = Page.getCurrent().getUriFragment();
 		if (f == null || f.equals("")) {
 			try {
 				if (FilterLoginService.loggedUser.getRole().equals("admin")) {
-					System.out.println(FilterLoginService.loggedUser.getRole());
 					navigator.navigateTo(SearchView.NAME);
 
 				} else {
@@ -371,12 +355,12 @@ public class MainPage extends UI {
 		question.addClickListener(new OnClickNavigateTo(AddQuestionView.NAME));
 		menu.addComponent(question);
 
-		Button quiz = new Button("Generate Quiz");
-		quiz.setIcon(FontAwesome.PENCIL_SQUARE_O);
-		quiz.setPrimaryStyleName("valo-menu-item");
-		quiz.setHtmlContentAllowed(true);
-		quiz.addClickListener(new OnClickNavigateTo(GenerateQuizView.NAME));
-		menu.addComponent(quiz);
+		Button generateQuiz = new Button("Generate Quiz");
+		generateQuiz.setIcon(FontAwesome.PENCIL_SQUARE_O);
+		generateQuiz.setPrimaryStyleName("valo-menu-item");
+		generateQuiz.setHtmlContentAllowed(true);
+		generateQuiz.addClickListener(new OnClickNavigateTo(GenerateQuizView.NAME));
+		menu.addComponent(generateQuiz);
 
 		Button statistics = new Button("Statistics");
 		statistics.setIcon(FontAwesome.SORT_AMOUNT_DESC);
@@ -437,14 +421,14 @@ public class MainPage extends UI {
 		colleagues.addClickListener(new OnClickNavigateTo(SearchView.NAME));
 		menu.addComponent(colleagues);
 
-		Button b = new Button("News Feed");
-		b.setIcon(FontAwesome.INFO_CIRCLE);
-		b.setPrimaryStyleName("valo-menu-item");
-		b.setHtmlContentAllowed(true);
-		b.addClickListener(new OnClickNavigateTo(NewsView.NAME));
-		menu.addComponent(b);
+		Button quizzes = new Button("Quizzes");
+		quizzes.setIcon(FontAwesome.GRADUATION_CAP);
+		quizzes.setPrimaryStyleName("valo-menu-item");
+		quizzes.setHtmlContentAllowed(true);
+		quizzes.addClickListener(new OnClickNavigateTo(QuizView.NAME));
+		menu.addComponent(quizzes);
 
-		b = new Button("Inbox Messages");
+		Button b = new Button("Inbox Messages");
 		b.setIcon(FontAwesome.COMMENTS);
 		b.setPrimaryStyleName("valo-menu-item");
 		b.setHtmlContentAllowed(true);
@@ -517,9 +501,11 @@ public class MainPage extends UI {
 			if (FilterLoginService.loggedUser.getRole().equals("admin")) {
 				profile.setVisible(false);
 				colleagues.setVisible(false);
+				quizzes.setVisible(false);
 			} else {
 				statistics.setVisible(false);
 				skillsStatistics.setVisible(false);
+				generateQuiz.setVisible(false);
 			}
 		} catch (Exception e) {
 			UI.getCurrent().getPage().setLocation("http://localhost:8080/");

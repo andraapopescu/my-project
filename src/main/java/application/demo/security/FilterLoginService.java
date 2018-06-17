@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import application.demo.domain.EmployeeSkill;
+import application.demo.service.EmployeeSkillService;
 import application.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +20,7 @@ import application.demo.service.EmployeeService;
 public class FilterLoginService implements LoginService {
 
     public static Employee currentEmployee;
+    public static ArrayList<EmployeeSkill> employeeWishSkills;
     public static User loggedUser;
 
     private final ArrayList<LoginListener> listeners = new ArrayList<LoginService.LoginListener>();
@@ -35,6 +38,9 @@ public class FilterLoginService implements LoginService {
                     loggedUser = u;
                     if(loggedUser.getRole().equals("user")) {
                         currentEmployee = EmployeeService.findEmployeeByEmail(loggedUser.getUserName()).get(0);
+                        employeeWishSkills = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+
+                        System.out.println(employeeWishSkills);
                     } else {
                         currentEmployee = EmployeeService.findEmployeeByLastName("admin").get(0);
                     }

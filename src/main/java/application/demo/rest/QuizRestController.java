@@ -46,11 +46,11 @@ public class QuizRestController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseEntity<Void> addQuiz( @RequestBody Quiz quiz, UriComponentsBuilder ucBuilder ) {
+    public ResponseEntity<Void> addQuiz(@RequestBody Quiz quiz, UriComponentsBuilder ucBuilder ) {
         qzs.save(quiz);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("variant/{id}").buildAndExpand(quiz.getId()).toUri());
+        headers.setLocation(ucBuilder.path("quiz/{id}").buildAndExpand(quiz.getId()).toUri());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }

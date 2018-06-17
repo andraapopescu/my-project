@@ -1,9 +1,7 @@
 package application.demo.service;
 
 
-import application.demo.domain.Message;
 import application.demo.domain.Quiz;
-import application.demo.domain.Variant;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,9 +1,8 @@
 package application.demo.rest;
 
-import application.demo.domain.*;
-import application.demo.service.EmployeeService;
+import application.demo.domain.Question;
 import application.demo.service.QuestionDbService;
-import application.demo.service.QuizService;
+import application.demo.service.QuizDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +18,9 @@ public class QuestionRestController {
 
     @Autowired
     QuestionDbService qs;
+
+    @Autowired
+    QuizDbService qzs;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<ArrayList<Question>> getAllQuestions() {
@@ -37,7 +39,7 @@ public class QuestionRestController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ResponseEntity<Void> addQuiz( @RequestBody Question question, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Void> addQuestion( @RequestBody Question question, UriComponentsBuilder ucBuilder) {
         qs.save(question);
 
         HttpHeaders headers = new HttpHeaders();
@@ -46,12 +48,12 @@ public class QuestionRestController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/quiz/{id}", method = RequestMethod.GET)
-    public ArrayList<Question> getQuestionsByQuiz( @PathVariable("id") long id) {
-        Quiz quiz = QuizService.getQuizById(id);
-
-        return (ArrayList<Question>) qs.findByQuiz(quiz);
-    }
+//    @RequestMapping(value = "/quiz/{id}", method = RequestMethod.GET)
+//    public ArrayList<Question> getQuestionsByQuiz( @PathVariable("id") long id) {
+//        Quiz quiz = QuizService.getQuizById(id);
+//
+//        return (ArrayList<Question>) qs.findByQuiz(quiz);
+//    }
 
     @RequestMapping(value = "/deleteQuestion/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Question> deleteQuestion( @PathVariable("id") long id) {

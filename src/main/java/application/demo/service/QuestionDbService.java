@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface QuestionDbService extends DatabaseService<Question, Long> {
-    List<Question> findByQuiz(Quiz quiz);
+//    List<Question> findByQuiz(Quiz quiz);
 }

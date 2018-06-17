@@ -20,18 +20,11 @@ public class Question {
     private String variant4;
 
 
-    @ManyToOne(cascade= CascadeType.MERGE , fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_quiz")
-    private Quiz quiz;
+//    @ManyToMany(mappedBy = "questions")
+//    private Set<Quiz> quizzes = new HashSet<>();
 
-    public Question( String value, String questionAreaValue, String answerValue, String s, String value1, String s1, String value2 ) {
-    }
-
-    public Question() {
-
-    }
-
-    public Question(String specialization, String question, String answer, String variant1, String variant2, String variant3, String variant4, Quiz quiz ) {
+    public Question(String specialization, String question, String answer, String variant1,
+                     String variant2, String variant3, String variant4) {
         this.specialization = specialization;
         this.question = question;
         this.answer = answer;
@@ -39,7 +32,10 @@ public class Question {
         this.variant2 = variant2;
         this.variant3 = variant3;
         this.variant4 = variant4;
-        this.quiz = quiz;
+    }
+
+    public Question() {
+
     }
 
     public long getId() {
@@ -106,12 +102,19 @@ public class Question {
         this.variant4 = variant4;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
-    }
 
-    public void setQuiz( Quiz quiz ) {
-        this.quiz = quiz;
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", specialization='" + specialization + '\'' +
+                ", question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", variant1='" + variant1 + '\'' +
+                ", variant2='" + variant2 + '\'' +
+                ", variant3='" + variant3 + '\'' +
+                ", variant4='" + variant4 + '\'' +
+                '}';
     }
 }
 

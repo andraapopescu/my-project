@@ -135,7 +135,7 @@
   }
 
   .v-slider-ticks {
-    @include valo-slider-ticks($tick-count: 5);
+    @include valo-slider-ticks($tick-count: 6);
   }
 
   .v-accordion-item-color1 .v-accordion-item-caption {

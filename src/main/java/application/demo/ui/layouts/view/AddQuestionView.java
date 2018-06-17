@@ -166,7 +166,7 @@ public class AddQuestionView extends VerticalLayout implements View {
 
                         Question question = new Question(specializationComboBox.getValue().toString(), questionField.getValue().toString(),
                                 getQuestionsRightAnswer(), firstVarField.getValue().toString(), secondVarField.getValue().toString(),
-                                thirdVarField.getValue().toString(), forthVarField.getValue().toString(), null);
+                                thirdVarField.getValue().toString(), forthVarField.getValue().toString());
                         QuestionService.saveQuestion(question);
 
                         Notification.show("Your question have been registered!", Notification.Type.HUMANIZED_MESSAGE);
