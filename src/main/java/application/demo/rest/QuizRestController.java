@@ -1,11 +1,10 @@
 package application.demo.rest;
 
-import application.demo.domain.Employee;
-import application.demo.domain.Question;
-import application.demo.domain.Quiz;
-import application.demo.domain.Skill;
+import application.demo.domain.*;
 import application.demo.service.EmployeeService;
+import application.demo.service.HistoryEmployeeSkillService;
 import application.demo.service.QuizDbService;
+import application.demo.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -53,6 +52,18 @@ public class QuizRestController {
         headers.setLocation(ucBuilder.path("quiz/{id}").buildAndExpand(quiz.getId()).toUri());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Quiz> deleteQuiz(@PathVariable("id") long id) {
+       Quiz result = QuizService.getQuizById(id);
+
+        if (result == null) {
+            return new ResponseEntity<Quiz>(HttpStatus.NO_CONTENT);
+        }
+
+        qzs.delete(result);
+        return new ResponseEntity<Quiz>(HttpStatus.NO_CONTENT);
     }
 
 }

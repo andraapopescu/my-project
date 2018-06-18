@@ -18,7 +18,7 @@ import java.util.List;
 
 public class QuizView extends VerticalLayout implements View {
 
-    public final static String NAME = "MessageView";
+    public final static String NAME = "QuizView";
 
     private Employee currentEmployee;
     private List<Quiz> quizList = new ArrayList<>();

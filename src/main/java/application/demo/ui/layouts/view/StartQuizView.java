@@ -1,9 +1,8 @@
 package application.demo.ui.layouts.view;
 
-import application.demo.domain.Employee;
-import application.demo.domain.Question;
-import application.demo.domain.Quiz;
-import application.demo.domain.QuizQuestion;
+import application.demo.domain.*;
+import application.demo.service.EmployeeService;
+import application.demo.service.MessageService;
 import application.demo.service.QuizQuestionService;
 import application.demo.service.QuizService;
 import com.vaadin.navigator.View;
@@ -11,8 +10,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class StartQuizView extends VerticalLayout implements View {
 
@@ -26,6 +24,12 @@ public class StartQuizView extends VerticalLayout implements View {
 
     private HorizontalLayout mainLayput = new HorizontalLayout();
     private List<OptionGroup> variantsList = new ArrayList<>();
+
+    private int score = 0;
+
+    Map<String, Integer> capabilitiesMap = new HashMap<>();
+
+    Employee admin = EmployeeService.findEmployeeByLastName("admin").get(0);
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -186,14 +190,51 @@ public class StartQuizView extends VerticalLayout implements View {
                 int i = 0;
                 for(OptionGroup o : variantsList) {
                     if(reorderedQuestions.get(i).getAnswer().equals(o.getValue())) {
-                        
+                        Question q = reorderedQuestions.get(i);
+                        score ++;
+
+                        if(capabilitiesMap.get(q.getSpecialization()) == null) {
+                            capabilitiesMap.put(q.getSpecialization(), 1);
+                        } else {
+                            int value = capabilitiesMap.get(q.getSpecialization());
+                            capabilitiesMap.put(q.getSpecialization(), value + 1);
+                        }
                     }
+
                     i++;
                 }
+
+                writeMessageToAdmin();
+                QuizService.deleteQuiz(quiz);
+                getUI().getNavigator().navigateTo(QuizView.NAME);
+
+                Window subWindow = new Window("Quiz Confirmation");
+                QuizConfirmationPopup popup = new QuizConfirmationPopup();
+                UI.getCurrent().addWindow(popup);
             }
+
         });
 
         return submitButton;
+    }
+
+    private void writeMessageToAdmin() {
+        String subject =  currentEmployee.getLastName() + " " + currentEmployee.getFirstName() + " - " + quiz.getDescription();
+
+        StringBuffer messageBody = new StringBuffer();
+        messageBody.append(currentEmployee.getLastName() + " " + currentEmployee.getFirstName() + " had a score of "
+                + score + " point out of 10. The result looks like this: ");
+        messageBody.append("/n");
+
+        for (String key : capabilitiesMap.keySet()) {
+            String value = capabilitiesMap.get(key).toString();
+            messageBody.append("For capability: " + key.toUpperCase() + " - " + value + "points");
+            messageBody.append("/n");
+        }
+
+        Message messageForAdmin = new Message("Quiz Report", new Date(), subject, messageBody.toString(), admin);
+        MessageService.saveMessage(messageForAdmin);
+
     }
 
 }

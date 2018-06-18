@@ -83,5 +83,4 @@ public class EmployeeSkillRestController {
 		return new ResponseEntity<EmployeeSkill>(HttpStatus.NO_CONTENT);
 	}
 	
-	
 }

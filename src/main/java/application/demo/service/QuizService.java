@@ -1,7 +1,7 @@
 package application.demo.service;
 
 
-import application.demo.domain.Quiz;
+import application.demo.domain.*;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +12,11 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+
+import static application.demo.service.EmployeeSkillService.deleteEmployeeSkillsById;
+import static application.demo.service.EmployeeSkillService.getEmployeeSkillByEmployee;
+import static application.demo.service.EmployeeSkillService.getSkillHistoryByEmployee;
+import static application.demo.service.HistoryEmployeeSkillService.deleteHistoryById;
 
 public class QuizService {
 
@@ -103,5 +108,17 @@ public class QuizService {
         }
 
         return result;
+    }
+
+    public static void deleteQuiz(Quiz quiz) {
+        RestTemplate restTemplate = new RestTemplate();
+
+
+        ArrayList<QuizQuestion> quizQuestions = QuizQuestionService.getQuizQuestionByQuiz(quiz.getId());
+        for(QuizQuestion qq : quizQuestions) {
+            QuizQuestionService.deleteQuizQuestionById(qq.getId());
+        }
+
+        restTemplate.delete(REST_SERVICE_URI + "/quiz/delete/" + quiz.getId());
     }
 }

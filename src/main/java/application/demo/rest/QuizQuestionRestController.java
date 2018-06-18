@@ -1,5 +1,6 @@
 package application.demo.rest;
 
+import application.demo.domain.EmployeeSkill;
 import application.demo.domain.Quiz;
 import application.demo.domain.QuizQuestion;
 import application.demo.service.QuizQuestionlDbService;
@@ -58,6 +59,13 @@ public class QuizQuestionRestController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("quizQuestion/{id}").buildAndExpand(quizQuestion.getId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<QuizQuestion> deleteQuizQuestion(@PathVariable("id") long id) {
+
+		qqs.delete(id);
+		return new ResponseEntity<QuizQuestion>(HttpStatus.NO_CONTENT);
 	}
 
 }
