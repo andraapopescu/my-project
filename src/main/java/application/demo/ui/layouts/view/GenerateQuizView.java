@@ -1,9 +1,6 @@
 package application.demo.ui.layouts.view;
 
-import application.demo.domain.Employee;
-import application.demo.domain.Question;
-import application.demo.domain.Quiz;
-import application.demo.domain.QuizQuestion;
+import application.demo.domain.*;
 import application.demo.security.FilterLoginService;
 import application.demo.service.*;
 import com.vaadin.data.util.BeanItemContainer;
@@ -160,7 +157,7 @@ public class GenerateQuizView extends VerticalLayout implements View {
                         e.printStackTrace();
                     }
 
-                    long id = QuizService.getAllQuizzes().get(QuizService.getAllQuizzes().size() -1).getId();
+                    long id = QuizService.getAllQuizzes().get(QuizService.getAllQuizzes().size() - 1).getId();
                     Quiz lastQuiz = QuizService.getQuizById(id);
                     QuizQuestion quizQuestion;
 
@@ -170,6 +167,8 @@ public class GenerateQuizView extends VerticalLayout implements View {
                     }
 
                     Notification.show("A new quiz has just been created!", Notification.Type.HUMANIZED_MESSAGE);
+                    writeMessageToNotifyQuiz();
+
                     candidatesComboBox.clear();
                     descriptionField.clear();
                 }
@@ -198,7 +197,7 @@ public class GenerateQuizView extends VerticalLayout implements View {
                 e.printStackTrace();
             }
 
-            long id = QuizService.getAllQuizzes().get(QuizService.getAllQuizzes().size() -1).getId();
+            long id = QuizService.getAllQuizzes().get(QuizService.getAllQuizzes().size() - 1).getId();
             Quiz lastQuiz = QuizService.getQuizById(id);
             QuizQuestion quizQuestion;
 
@@ -211,12 +210,14 @@ public class GenerateQuizView extends VerticalLayout implements View {
                     QuizQuestionService.save(quizQuestion);
                 }
 
-                    Notification.show("A new quiz has just been generated!", Notification.Type.HUMANIZED_MESSAGE);
-                    candidatesComboBox.clear();
-                    descriptionField.clear();
-                }
+                Notification.show("A new quiz has just been generated!", Notification.Type.HUMANIZED_MESSAGE);
+                writeMessageToNotifyQuiz();
+
+                candidatesComboBox.clear();
+                descriptionField.clear();
             }
         }
+    }
 
     private Grid createQuestionsGrid() {
         Grid result = new Grid();
@@ -268,6 +269,27 @@ public class GenerateQuizView extends VerticalLayout implements View {
         result.setTextInputAllowed(true);
 
         return result;
+    }
+
+    private void writeMessageToNotifyQuiz() {
+        StringBuffer messageBody = new StringBuffer();
+
+        messageBody.append("Hello " + candidatesComboBox.getValue() + ", ");
+        messageBody.append("You have a new quiz available on Quizzes section. Check it out!");
+        messageBody.append("Remember! Quiz will expire on: " + expirationDate.getValue() +
+                " so take it before this date.");
+        messageBody.append("Best regards and good luck!");
+
+        Message message = new Message("Management Team & HR Department", new Date(), "New Quiz Available",
+                messageBody.toString(), getEmployeeByCandidateName());
+        MessageService.saveMessage(message);
+
+    }
+
+    private Employee getEmployeeByCandidateName() {
+        String lastName = candidatesComboBox.getValue().toString().split(" ")[1];
+
+        return EmployeeService.findEmployeeByLastName(lastName).get(0);
     }
 
     public static boolean areFieldsValid() {
