@@ -276,6 +276,12 @@ public class StartQuizView extends VerticalLayout implements View {
                                 EmployeeSkillService.saveEmployeeSkill(new EmployeeSkill(es.getLevel() + 2,
                                         es.getEmployee(), es.getSkill()));
 
+                                ArrayList<EmployeeSkill> ess = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+                                for(EmployeeSkill e : ess) {
+                                    HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
+                                            e.getLevel(), currentEmployee, e.getSkill()));
+                                }
+
                                 HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
                                         es.getLevel() + 2, currentEmployee, es.getSkill()));
 
@@ -284,6 +290,12 @@ public class StartQuizView extends VerticalLayout implements View {
                                 EmployeeSkillService.deleteEmployeeSkillsById(es.getId());
                                 EmployeeSkillService.saveEmployeeSkill(new EmployeeSkill(es.getLevel() + 1,
                                         es.getEmployee(), es.getSkill()));
+
+                                ArrayList<EmployeeSkill> ess = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+                                for(EmployeeSkill e : ess) {
+                                    HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
+                                            e.getLevel(), currentEmployee, e.getSkill()));
+                                }
 
                                 HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
                                         es.getLevel() + 1, currentEmployee, es.getSkill()));
@@ -312,6 +324,13 @@ public class StartQuizView extends VerticalLayout implements View {
                     technicalExpertSkill = SkillService.findSkillByName("technical_expert").get(0);
 
                     EmployeeSkillService.saveEmployeeSkill(new EmployeeSkill(2, currentEmployee, technicalExpertSkill));
+
+                    ArrayList<EmployeeSkill> ess = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+                    for(EmployeeSkill e : ess) {
+                        HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
+                                e.getLevel(), currentEmployee, e.getSkill()));
+                    }
+
                     HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
                             2, currentEmployee, technicalExpertSkill));
                 } else {
@@ -323,16 +342,35 @@ public class StartQuizView extends VerticalLayout implements View {
                                 EmployeeSkillService.deleteEmployeeSkillsById(es.getId());
                                 EmployeeSkillService.saveEmployeeSkill(new EmployeeSkill(es.getLevel() + 2, currentEmployee, skill));
 
+                                ArrayList<EmployeeSkill> ess = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+                                for(EmployeeSkill e : ess) {
+                                    HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
+                                            e.getLevel(), currentEmployee, e.getSkill()));
+                                }
+
                                 HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
                                         es.getLevel() + 2, currentEmployee, skill));
                             } else if(es.getLevel() == 9) {
                                 EmployeeSkillService.deleteEmployeeSkillsById(es.getId());
                                 EmployeeSkillService.saveEmployeeSkill(new EmployeeSkill(10, currentEmployee, skill));
 
+                                ArrayList<EmployeeSkill> ess = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+                                for(EmployeeSkill e : ess) {
+                                    HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
+                                            e.getLevel(), currentEmployee, e.getSkill()));
+                                }
+
                                 HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(), 10, currentEmployee, skill));
                             }
                         } else {
                             EmployeeSkillService.saveEmployeeSkill(new EmployeeSkill(2, currentEmployee, skill));
+
+                            ArrayList<EmployeeSkill> ess = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+                            for(EmployeeSkill e : ess) {
+                                HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
+                                        e.getLevel(), currentEmployee, e.getSkill()));
+                            }
+
                             HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(), 2, currentEmployee, skill));
                         }
                     }
@@ -350,8 +388,15 @@ public class StartQuizView extends VerticalLayout implements View {
                     EmployeeSkillService.saveEmployeeSkill(new EmployeeSkill(es.getLevel() + 1,
                             es.getEmployee(), es.getSkill()));
 
+                    ArrayList<EmployeeSkill> ess = EmployeeSkillService.getEmployeeSkillByEmployee(currentEmployee.getId());
+                    for(EmployeeSkill e : ess) {
+                        HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
+                                e.getLevel(), currentEmployee, e.getSkill()));
+                    }
+
                     HistoryEmployeeSkillService.saveHistoryEmployeeSkill(new HistoryEmployeeSkill(new Date(),
                             es.getLevel() + 1, currentEmployee, es.getSkill()));
+
                 }
             }
         }

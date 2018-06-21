@@ -48,8 +48,8 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
     private long employeeId;
 
     @Override
-    public void enter( ViewChangeEvent event ) {
-        if (event.getParameters() != null) {
+    public void enter(ViewChangeEvent event) {
+        if(event.getParameters() != null) {
 
             try {
                 selectedEmployee = FilterLoginService.currentEmployee;
@@ -57,11 +57,11 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
 
                 employeeId = Long.parseLong(event.getParameters());
 
-            } catch (NumberFormatException e) {
+            } catch(NumberFormatException e) {
                 e.printStackTrace();
                 getUI().getNavigator().navigateTo(SearchView.NAME);
 
-            } catch (NullPointerException e) {
+            } catch(NullPointerException e) {
                 UI.getCurrent().getPage().setLocation("http://localhost:8080/");
                 e.printStackTrace();
             }
@@ -69,18 +69,18 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
             employee = EmployeeService.getEmployeeById(employeeId);
 
             try {
-                if (employee == null) {
+                if(employee == null) {
                     System.out.println("nullll");
                     getUI().getNavigator().navigateTo(SearchView.NAME);
                     return;
-                } else if (user.getRole().equals("user")) {
+                } else if(user.getRole().equals("user")) {
                     editEmployeeViewForUser();
 
                 } else {
                     editEmployeeViewForAdmin();
                     user = UserService.findUserByUsername(employee.getEmail()).get(0);
                 }
-            } catch (Exception e) {
+            } catch(Exception e) {
                 System.out.println("a crapat");
                 e.printStackTrace();
                 UI.getCurrent().getPage().setLocation("http://localhost:8080/");
@@ -189,39 +189,38 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
         sliders = new ArrayList<CustomSlider>();
 
         ArrayList<Skill> skills = SkillService.getAllSkills();
-
         HashMap<Integer, String> skillsMap = new HashMap<Integer, String>();
 
         ArrayList<EmployeeSkill> employeeSkills = EmployeeSkillService.getEmployeeSkillByEmployee(employee.getId());
         HashMap<Integer, Integer> employeeSkillsMap = new HashMap<Integer, Integer>();
 
-        if (employeeSkills == null) {
+        if(employeeSkills == null) {
             employeeSkills = new ArrayList<EmployeeSkill>();
 
-            for (int i = 0; i < skills.size() + 2; i++)
+            for(int i = 0; i < skills.size() + 2; i++)
                 employeeSkillsMap.put(i, 0);
         } else {
-            for (EmployeeSkill e : employeeSkills) {
+            for(EmployeeSkill e : employeeSkills) {
                 employeeSkillsMap.put((int) e.getSkill().getId(), e.getLevel());
             }
         }
 
-        for (Skill s : skills) {
+        for(Skill s : skills) {
             skillsMap.put((int) s.getId(), s.getName());
         }
 
         int i = 1;
 
-        for (Skill s : skills) {
+        for(Skill s : skills) {
             CustomSlider slider = new CustomSlider(s.getName(), i);
 
-            if (s.getId() != 1)
+            if(s.getId() != 0)
                 slider.addStyleName("sslider");
 
             sliders.add(slider);
             row.addComponent(slider);
 
-            if (employeeSkillsMap.get(i) != null) {
+            if(employeeSkillsMap.get(i) != null) {
                 slider.getSlider().setValue((double) employeeSkillsMap.get(i));
             }
 
@@ -236,12 +235,12 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void buttonClick( ClickEvent event ) {
+            public void buttonClick(ClickEvent event) {
 
                 try {
                     validateFields();
                     saveEmployeeToDataBase();
-                } catch (InvalidValueException e) {
+                } catch(InvalidValueException e) {
 
                 }
 
@@ -263,7 +262,7 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
                 User u = new User(mail, user.getPassword(), user.getRole());
                 u.setId(user.getId());
 
-                if (up.isUploaded()) {
+                if(up.isUploaded()) {
                     up.save(employee.getId());
                 }
 
@@ -271,15 +270,15 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
                 UserService.updateUser(u);
 
                 ArrayList<EmployeeSkill> employeeSkills = EmployeeSkillService.getEmployeeSkillByEmployee(employeeId);
-                for (EmployeeSkill es : employeeSkills) {
+                for(EmployeeSkill es : employeeSkills) {
                     EmployeeSkillService.deleteEmployeeSkillsById(es.getId());
                 }
 
-                for (CustomSlider c : sliders) {
+                for(CustomSlider c : sliders) {
                     Skill skill = SkillService.findSkillByName(c.getName()).get(0);
 
                     EmployeeSkill employeeSkill = new EmployeeSkill((int) c.getValue(), employee, skill);
-                    if (c.getValue() != 0) {
+                    if(c.getValue() != 0) {
 
                         EmployeeSkillService.saveEmployeeSkill(employeeSkill);
 
@@ -362,7 +361,7 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
         changePsdButton.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
-            public void buttonClick( ClickEvent event ) {
+            public void buttonClick(ClickEvent event) {
                 Window subWindow = new Window("Change Password");
                 ChangePasswordPopup popup = new ChangePasswordPopup();
 
@@ -413,15 +412,15 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
         ArrayList<Skill> allSkills = new ArrayList<Skill>();
         ArrayList<EmployeeSkill> employeeSkills = EmployeeSkillService.getEmployeeSkillByEmployee(employee.getId());
 
-        for (EmployeeSkill es : employeeSkills) {
+        for(EmployeeSkill es : employeeSkills) {
             allSkills.add(SkillService.getSkillById(es.getSkill().getId()));
 
         }
 
         try {
-            if (employeeSkills != null)
-                for (EmployeeSkill empSkill : employeeSkills) {
-                    if (empSkill.getLevel() != 0) {
+            if(employeeSkills != null)
+                for(EmployeeSkill empSkill : employeeSkills) {
+                    if(empSkill.getLevel() != 0) {
                         ProgressBar b = new ProgressBar();
                         b.setCaption(allSkills.get((int) (empSkill.getSkill().getId() - 1)).getName() + " "
                                 + empSkill.getLevel());
@@ -431,7 +430,7 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
                         row.addComponent(b);
                     }
                 }
-        } catch (Exception e) {
+        } catch(Exception e) {
 
         }
 
@@ -443,12 +442,12 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void buttonClick( ClickEvent event ) {
+            public void buttonClick(ClickEvent event) {
 
                 try {
                     validateFields();
                     saveEmployeeToDataBase();
-                } catch (InvalidValueException e) {
+                } catch(InvalidValueException e) {
 
                 }
 
@@ -467,7 +466,7 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
                 User u = new User(mail, user.getPassword(), user.getRole());
                 u.setId(user.getId());
 
-                if (up.isUploaded()) {
+                if(up.isUploaded()) {
                     up.save(employee.getId());
                 }
 
@@ -504,17 +503,17 @@ public class EditEmployeeView extends VerticalLayout implements View, LoginServi
     }
 
     @Override
-    public void userLoggedIn( LoginEvent e ) {
+    public void userLoggedIn(LoginEvent e) {
 
     }
 
     @Override
-    public void userLoggedOut( LoginEvent e ) {
+    public void userLoggedOut(LoginEvent e) {
         UI.getCurrent().getPage().reload();
     }
 
     @Override
-    public void userLoginFailed( LoginEvent e ) {
+    public void userLoginFailed(LoginEvent e) {
 
     }
 

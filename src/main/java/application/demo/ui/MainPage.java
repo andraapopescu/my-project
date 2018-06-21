@@ -506,6 +506,7 @@ public class MainPage extends UI {
 				statistics.setVisible(false);
 				skillsStatistics.setVisible(false);
 				generateQuiz.setVisible(false);
+				question.setVisible(false);
 			}
 		} catch (Exception e) {
 			UI.getCurrent().getPage().setLocation("http://localhost:8080/");
